@@ -3,45 +3,62 @@ package com.sikuliintegrator;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-public class ArgumentsMapping
-{
-  private String patternURL;
-  private double similarity;
-  private int timeout;
+public class ArgumentsMapping {
+	private String patternURL;
+	private double similarity;
+	private int timeout;
+	private Command command;
 
-  public ArgumentsMapping(String[] args)
-  {
-    setPatternURL(args[Arguments.PATTERN_URL.ordinal()]);
-    setSimilarity(Double.valueOf(args[Arguments.SIMILARITY.ordinal()]).doubleValue());
-    setTimeout(Integer.valueOf(Arguments.TIMEOUT.ordinal()).intValue());
-  }
+	public ArgumentsMapping(String[] args) {
+		setPatternURL(args[Arguments.PATTERN_URL.ordinal()]);
+		setCommand(args[Arguments.COMMAND.ordinal()]);
+		setSimilarity(Double.valueOf(args[Arguments.SIMILARITY.ordinal()])
+				.doubleValue());
+		setTimeout(Integer.valueOf(Arguments.TIMEOUT.ordinal()).intValue());
+	}
 
-  public String getPatternURL() throws FileNotFoundException {
-    File file = new File(this.patternURL);
-    if (!file.exists())
-    {
-      throw new FileNotFoundException();
-    }
+	public String getPatternURL() throws FileNotFoundException {
+		File file = new File(this.patternURL);
+		if (!file.exists()) {
+			throw new FileNotFoundException();
+		}
 
-    return this.patternURL;
-  }
-  public void setPatternURL(String patternURL) {
-    this.patternURL = patternURL;
-  }
+		return this.patternURL;
+	}
 
-  public double getSimilarity() {
-    return this.similarity;
-  }
+	public void setPatternURL(String patternURL) {
+		this.patternURL = patternURL;
+	}
 
-  public void setSimilarity(double similarity) {
-    this.similarity = similarity;
-  }
+	public double getSimilarity() {
+		return this.similarity;
+	}
 
-  public int getTimeout() {
-    return this.timeout;
-  }
+	public void setSimilarity(double similarity) {
+		this.similarity = similarity;
+	}
 
-  public void setTimeout(int timeout) {
-    this.timeout = timeout;
-  }
+	public int getTimeout() {
+		return this.timeout;
+	}
+
+	public void setTimeout(int timeout) {
+		this.timeout = timeout;
+	}
+	
+	public Command getCommand() {
+		return command;
+	}
+	
+	public void setCommand(String command) {
+		Command[] allCommands = Command.values();
+		for(int idx = 0; idx < allCommands.length; idx++)
+		{
+			if(allCommands[idx].toString().equals(command))
+			{
+				this.command = allCommands[idx];
+				break;
+			}
+		}	
+	}
 }
