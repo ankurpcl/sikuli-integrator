@@ -3,6 +3,7 @@
 	<name>SikuliIntegrator</name>
 	<comment></comment>
 	<projects>
+		<project>sikuli-api</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
