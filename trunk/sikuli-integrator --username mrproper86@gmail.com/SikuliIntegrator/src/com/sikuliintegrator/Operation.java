@@ -12,7 +12,8 @@ import org.sikuli.api.robot.desktop.DesktopMouse;
 import org.sikuli.script.Match;
 import org.sikuli.script.Screen;
 
-import com.sikuliintegrator.exception.NoMatchingElementException;
+import com.sikuliintegrator.arguments.ArgumentsMapping;
+import com.sikuliintegrator.exceptions.NoMatchingElementException;
 
 public class Operation {
 

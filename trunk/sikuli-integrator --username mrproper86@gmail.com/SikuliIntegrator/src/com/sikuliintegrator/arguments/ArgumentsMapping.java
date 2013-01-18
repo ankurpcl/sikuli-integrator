@@ -1,7 +1,9 @@
-package com.sikuliintegrator;
+package com.sikuliintegrator.arguments;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+
+import com.sikuliintegrator.enums.Command;
 
 public class ArgumentsMapping {
 	private String patternURL;

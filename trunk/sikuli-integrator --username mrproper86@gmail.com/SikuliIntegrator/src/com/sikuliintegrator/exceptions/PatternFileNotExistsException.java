@@ -1,4 +1,4 @@
-package com.sikuliintegrator.exception;
+package com.sikuliintegrator.exceptions;
 
 public class PatternFileNotExistsException extends Exception {
 

@@ -2,8 +2,10 @@ package com.sikuliintegrator;
 
 import org.sikuli.script.Settings;
 
-import com.sikuliintegrator.exception.UnknownCommandException;
-import com.sikuliintegrator.exception.WrongArgumentCountException;
+import com.sikuliintegrator.arguments.ArgumentsMapping;
+import com.sikuliintegrator.exceptions.ExceptionHandler;
+import com.sikuliintegrator.exceptions.UnknownCommandException;
+import com.sikuliintegrator.exceptions.WrongArgumentCountException;
 
 public class Pointer {
 	public static void main(String[] args) {
