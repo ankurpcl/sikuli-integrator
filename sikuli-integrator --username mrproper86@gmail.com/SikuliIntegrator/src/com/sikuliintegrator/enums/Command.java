@@ -1,4 +1,4 @@
-package com.sikuliintegrator;
+package com.sikuliintegrator.enums;
 
 public enum Command {
 	GET_POINT,

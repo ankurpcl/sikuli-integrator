@@ -1,4 +1,4 @@
-package com.sikuliintegrator;
+package com.sikuliintegrator.arguments;
 
 public enum Arguments
 {

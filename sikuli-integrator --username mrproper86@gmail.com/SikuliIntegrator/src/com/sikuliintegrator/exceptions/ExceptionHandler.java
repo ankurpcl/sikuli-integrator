@@ -1,11 +1,8 @@
-package com.sikuliintegrator;
+package com.sikuliintegrator.exceptions;
 
 import java.io.FileNotFoundException;
 
-import com.sikuliintegrator.exception.NoMatchingElementException;
-import com.sikuliintegrator.exception.PatternFileNotExistsException;
-import com.sikuliintegrator.exception.UnknownCommandException;
-import com.sikuliintegrator.exception.WrongArgumentCountException;
+import com.sikuliintegrator.Result;
 
 public class ExceptionHandler {
 
