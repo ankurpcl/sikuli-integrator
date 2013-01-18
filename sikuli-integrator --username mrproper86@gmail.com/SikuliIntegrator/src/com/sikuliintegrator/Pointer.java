@@ -49,10 +49,12 @@ public class Pointer {
 					case RIGHT_CLICK: {
 						Operation.RightClick(arguments);
 					}
+						break;
 
 					case HOVER: {
 
 					}
+						break;
 
 					default: {
 						throw new UnknownCommandException();
