@@ -12,30 +12,24 @@ import org.sikuli.api.robot.desktop.DesktopMouse;
 import org.sikuli.script.Match;
 import org.sikuli.script.Screen;
 
+import com.sikuliintegrator.exception.NoMatchingElementException;
+
 public class Operation {
 
-	public static void GetPoint(ArgumentsMapping arguments) {
+	public static void GetPoint(ArgumentsMapping arguments)
+			throws NoMatchingElementException, FileNotFoundException {
 
-		try {
-			Screen screen = new Screen();
-			Match match = screen.exists(arguments.getPatternURL(),
-					arguments.getTimeout());
+		Screen screen = new Screen();
+		Match match = screen.exists(arguments.getPatternURL(),
+				arguments.getTimeout());
 
-			if (match != null) {
-				System.out
-						.println(Constants.IDENTIFICATOR + "("
-								+ match.getCenter().x + ";"
-								+ match.getCenter().y + ")");
-				match.highlight();
-				Result.success();
-			} else {
-				Result.failure("1:There is no matching element");
-
-			}
-		} catch (FileNotFoundException ex) {
-			Result.failure("3:Pattern file can not be found");
-		} catch (Exception ex) {
-			Result.failure();
+		if (match != null) {
+			System.out.println(Constants.IDENTIFICATOR + "("
+					+ match.getCenter().x + ";" + match.getCenter().y + ")");
+			match.highlight();
+			Result.success();
+		} else {
+			throw new NoMatchingElementException();
 		}
 	}
 
@@ -60,33 +54,50 @@ public class Operation {
 		return r;
 	}
 
-	public static void Click(ArgumentsMapping arguments) {
+	public static void Click(ArgumentsMapping arguments)
+			throws FileNotFoundException {
 
-		try {
-			ScreenRegion r = getScreenRegion(arguments);
-			// Click the center of the found target
-			Mouse mouse = new DesktopMouse();
-			mouse.click(r.getCenter());
-			Result.success();
-		} catch (FileNotFoundException ex) {
-			Result.failure("3:Pattern file can not be found");
-		} catch (Exception ex) {
-			Result.failure();
-		}
+		ScreenRegion r = getScreenRegion(arguments);
+		// Click the center of the found target
+		Mouse mouse = new DesktopMouse();
+		mouse.click(r.getCenter());
+		Result.success();
 	}
-	
-	public static void DoubleClick(ArgumentsMapping arguments) {
 
-		try {
+	public static void DoubleClick(ArgumentsMapping arguments)
+			throws FileNotFoundException, NoMatchingElementException {
+
+		Screen screen = new Screen();
+		Match match = screen.exists(arguments.getPatternURL(),
+				arguments.getTimeout());
+
+		if (match != null) {
 			ScreenRegion r = getScreenRegion(arguments);
 			// Click the center of the found target
 			Mouse mouse = new DesktopMouse();
 			mouse.doubleClick(r.getCenter());
 			Result.success();
-		} catch (FileNotFoundException ex) {
-			Result.failure("3:Pattern file can not be found");
-		} catch (Exception ex) {
-			Result.failure();
+		} else {
+			throw new NoMatchingElementException();
+		}
+	}
+
+	public static void RightClick(ArgumentsMapping arguments)
+			throws FileNotFoundException, NoMatchingElementException {
+
+		Screen screen = new Screen();
+		Match match = screen.exists(arguments.getPatternURL(),
+				arguments.getTimeout());
+
+		if (match != null) {
+			ScreenRegion r = getScreenRegion(arguments);
+			// Click the center of the found target
+			Mouse mouse = new DesktopMouse();
+			mouse.rightClick(r.getCenter());
+			Result.success();
+		} else {
+			throw new NoMatchingElementException();
+
 		}
 	}
 }
