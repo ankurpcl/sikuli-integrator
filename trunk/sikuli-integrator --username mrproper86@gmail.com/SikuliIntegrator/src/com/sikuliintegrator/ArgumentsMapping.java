@@ -51,14 +51,7 @@ public class ArgumentsMapping {
 	}
 	
 	public void setCommand(String command) {
-		Command[] allCommands = Command.values();
-		for(int idx = 0; idx < allCommands.length; idx++)
-		{
-			if(allCommands[idx].toString().equals(command))
-			{
-				this.command = allCommands[idx];
-				break;
-			}
-		}	
+		this.command = Command.valueOf(command);
+		
 	}
 }
