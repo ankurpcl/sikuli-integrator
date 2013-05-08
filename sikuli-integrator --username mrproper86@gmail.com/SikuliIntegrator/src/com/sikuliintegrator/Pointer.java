@@ -10,11 +10,11 @@ import com.sikuliintegrator.exceptions.WrongArgumentCountException;
 public class Pointer {
 	public static void main(String[] args) {
 
-		args = new String[4];
-		args[0] = "C:\\jt_icon.png";
-		args[1] = "RIGHT_CLICK";
-		args[2] = "0.9";
-		args[3] = "5000";
+//		args = new String[4];
+//		args[0] = "C:\\pattern.png";
+//		args[1] = "EXISTS";
+//		args[2] = "0.9";
+//		args[3] = "5000";
 
 		try {
 
@@ -31,7 +31,7 @@ public class Pointer {
 				} else {
 
 					switch (arguments.getCommand()) {
-					case GET_POINT: {
+					case EXISTS: {
 
 						Operation.GetPoint(arguments);
 					}
@@ -50,11 +50,6 @@ public class Pointer {
 
 					case RIGHT_CLICK: {
 						Operation.RightClick(arguments);
-					}
-						break;
-
-					case HOVER: {
-
 					}
 						break;
 
