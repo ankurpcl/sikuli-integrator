@@ -52,6 +52,11 @@ public class Pointer {
 						Operation.RightClick(arguments);
 					}
 						break;
+						
+					case HOVER: {
+						Operation.Hover(arguments);
+					}
+						break;
 
 					default: {
 						throw new UnknownCommandException();
