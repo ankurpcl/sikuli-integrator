@@ -101,4 +101,23 @@ public class Operation {
 
 		}
 	}
+	
+	public static void Hover(ArgumentsMapping arguments)
+			throws FileNotFoundException, NoMatchingElementException {
+
+		Screen screen = new Screen();
+		Match match = screen.exists(arguments.getPatternURL(),
+				arguments.getTimeout());
+
+		if (match != null) {
+			ScreenRegion r = getScreenRegion(arguments);
+			// Click the center of the found target
+			Mouse mouse = new DesktopMouse();
+			mouse.drop(r.getCenter());
+			Result.success();
+		} else {
+			throw new NoMatchingElementException();
+
+		}
+	}
 }
