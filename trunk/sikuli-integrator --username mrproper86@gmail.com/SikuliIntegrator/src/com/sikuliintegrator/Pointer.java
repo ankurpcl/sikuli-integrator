@@ -57,7 +57,19 @@ public class Pointer {
 						Operation.Hover(arguments);
 					}
 						break;
-
+						
+					//EiderMauricio@gmail.com source code added
+					case FIND_ALL: {
+						Operation.FindAll(arguments);
+					}
+						break;
+					
+					case WAIT_VANISH: {
+						Operation.WaitVanish(arguments);
+					}
+						break;	
+						
+						
 					default: {
 						throw new UnknownCommandException();
 					}
