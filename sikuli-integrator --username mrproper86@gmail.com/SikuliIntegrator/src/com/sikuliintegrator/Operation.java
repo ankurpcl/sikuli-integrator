@@ -120,4 +120,45 @@ public class Operation {
 
 		}
 	}
+	
+	public static void FindAll(ArgumentsMapping arguments)
+			throws FileNotFoundException, NoMatchingElementException {
+		
+		ScreenRegion s = new DesktopScreenRegion();             
+		Target target = new ImageTarget(new File(arguments.getPatternURL())); 
+		List<ScreenRegion> rs = s.findAll(target);
+		
+		if(rs == null || rs.size() == 0)
+		{
+			throw new NoMatchingElementException();
+		}
+		else{							
+			System.out.println("TOTAL_ELEMENTS " + rs.size());
+						
+			// iterate through a list of screen regions and add a box around each
+			for (ScreenRegion r : rs){			
+				System.out.println( "LOCATION (" + r.getCenter().getX() + ";" + r.getCenter().getY() + ")" );							        
+			}
+			
+			//Success
+			Result.success();
+		} 
+	}
+	
+	
+	public static void WaitVanish(ArgumentsMapping arguments)
+			throws FileNotFoundException, NoMatchingElementException {
+		
+		Screen screen = new Screen();
+		
+		boolean isVanished = false;
+		isVanished = screen.waitVanish(arguments.getPatternURL(), arguments.getTimeout());
+
+		if (isVanished) {
+			System.out.println("IS VANISHED!");
+			Result.success();
+		} else {
+			throw new NoMatchingElementException();
+		}		
+	}	
 }
