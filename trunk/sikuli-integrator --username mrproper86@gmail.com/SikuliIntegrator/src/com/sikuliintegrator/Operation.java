@@ -2,6 +2,7 @@ package com.sikuliintegrator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.List;
 
 import org.sikuli.api.DesktopScreenRegion;
 import org.sikuli.api.ImageTarget;
