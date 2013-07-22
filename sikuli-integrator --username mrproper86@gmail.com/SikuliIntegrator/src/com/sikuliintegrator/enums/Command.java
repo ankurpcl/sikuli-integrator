@@ -8,5 +8,6 @@ public enum Command {
 	HOVER,
 	DRAG_DROP,
 	FIND_ALL,
-	WAIT_VANISH
+	WAIT_VANISH,
+	WAIT
 }

@@ -5,5 +5,6 @@ public enum Arguments
   PATTERN_URL, 
   COMMAND,
   SIMILARITY, 
-  TIMEOUT;
+  TIMEOUT,
+  EXTRA_PATTERN_URL;
 }

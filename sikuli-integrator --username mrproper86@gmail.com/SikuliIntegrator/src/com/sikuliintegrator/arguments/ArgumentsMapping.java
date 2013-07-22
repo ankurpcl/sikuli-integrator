@@ -6,17 +6,19 @@ import java.io.FileNotFoundException;
 import com.sikuliintegrator.enums.Command;
 
 public class ArgumentsMapping {
+	
 	private String patternURL;
+	private String extraPatternURL;
 	private double similarity;
 	private int timeout;
 	private Command command;
 
 	public ArgumentsMapping(String[] args) {
 		setPatternURL(args[Arguments.PATTERN_URL.ordinal()]);
+		setExtraPatternURL(args[Arguments.EXTRA_PATTERN_URL.ordinal()]);
 		setCommand(args[Arguments.COMMAND.ordinal()]);
-		setSimilarity(Double.valueOf(args[Arguments.SIMILARITY.ordinal()])
-				.doubleValue());
-		setTimeout(Integer.valueOf(Arguments.TIMEOUT.ordinal()).intValue());
+		setSimilarity(Double.valueOf(args[Arguments.SIMILARITY.ordinal()]).doubleValue());
+		setTimeout(Integer.valueOf(args[Arguments.TIMEOUT.ordinal()]).intValue());
 	}
 
 	public String getPatternURL() throws FileNotFoundException {
@@ -28,8 +30,22 @@ public class ArgumentsMapping {
 		return this.patternURL;
 	}
 
+	public String getExtraPatternURL() throws FileNotFoundException {
+		File file = new File(this.extraPatternURL);
+		if (!file.exists()) {
+			throw new FileNotFoundException();
+		}
+
+		return this.extraPatternURL;
+	}
+
+	
 	public void setPatternURL(String patternURL) {
 		this.patternURL = patternURL;
+	}
+	
+	public void setExtraPatternURL(String extraPatternURL) {
+		this.extraPatternURL = extraPatternURL;
 	}
 
 	public double getSimilarity() {
