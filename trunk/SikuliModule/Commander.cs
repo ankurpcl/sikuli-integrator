@@ -26,7 +26,7 @@ namespace SikuliModule
 
                 string path = Environment.GetEnvironmentVariable("Path", EnvironmentVariableTarget.Process);
 
-                path += ";" + tempPath + @"\sikulilibs";
+                path += ";" + tempPath + @"\tmplib";
 
                 Environment.SetEnvironmentVariable("Path", path, EnvironmentVariableTarget.Process);
             }
