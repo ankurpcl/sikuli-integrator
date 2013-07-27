@@ -65,14 +65,14 @@ namespace UnitTest.Core
             {
                 this.delayTimeInSeconds = delayInSeconds;
                 //Start MSPaint after specified delay time in worker thread
-                Thread thread = new Thread(new ThreadStart(WorkThreadFunction));
+                Thread thread = new Thread(new ThreadStart(DelayedStartMSPaint));
                 thread.Start();
             }
         }
 
         private int delayTimeInSeconds;
 
-        private void WorkThreadFunction()
+        private void DelayedStartMSPaint()
         {
             try
             {
