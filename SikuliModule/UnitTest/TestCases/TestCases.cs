@@ -33,7 +33,7 @@ namespace UnitTest.TestCases
         public void TestFindAllWithSimilarity90AndTimeout5()
         {
             //There are 3 patterns on the test image
-            List<Point> points = SikuliAction.FindAll(findAllPattern, Similarity90, Timeout5S);
+            List<Point> points = SikuliAction.FindAll(findAllPattern, Similarity90, Timeout5S, Rectangle.Empty);
             if (points != null)
             {
                 foreach (Point point in points)
@@ -94,6 +94,37 @@ namespace UnitTest.TestCases
             {
                 Report.Error("Nope! There is a problem...");
             }
+        }
+
+
+        [TestMethod,
+        Description("Test Find All in a search region mechanism - default similarity and timeout")]
+        public void TestFindAllIntoRegion()
+        {
+         //There are 3 patterns on the test region
+         Rectangle searchRegion = new Rectangle(1, 1, 250, 400);
+         List<Point> points = SikuliAction.FindAll(findAllRegionPattern, searchRegion);
+         
+
+         if (points != null)
+         {
+          foreach (Point point in points)
+          {
+           Report.Info("X:" + point.X + "  Y: " + point.Y);
+          }
+          if (points.Count == 4)
+          {
+           Report.Pass("Yep! They are 4...");
+          }
+          else
+          {
+           Report.Error("Nope! They are NOT 4, they are " + points.Count);
+          }
+         }
+         else
+         {
+          Report.Error("Nope! There is a problem...");
+         }
         }
 
         [TestMethod,
@@ -169,6 +200,24 @@ namespace UnitTest.TestCases
             {
                 Report.Error("Nope! It's NOT drag and dropped...");
             }
+        }
+
+        [TestMethod,
+        Description("Test Drag and Drop + Click + Drag and Drop mechanism")]
+        public void TestDragAndDropStartDefault()
+        {
+         try
+         {
+          SikuliAction.Click(paintSelectPattern);
+          SikuliAction.DragAndDrop(startTopLeftPattern, startRightBottomtPattern);
+          SikuliAction.DragAndDrop(startPattern, pattern);
+
+          Report.Pass("Yep! It's drag and dropped...");
+         }
+         catch
+         {
+          Report.Error("Nope! It's NOT drag and dropped...");
+         }
         }
 
         [TestMethod,

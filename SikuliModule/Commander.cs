@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Ionic.Zip;
+using System.Threading;
 
 namespace SikuliModule
 {
@@ -13,6 +14,17 @@ namespace SikuliModule
     {
         private static void AddSikuliLibs()
         {
+            //Access to %APPDATA% path
+            string tempPath = System.IO.Path.GetTempPath();
+
+            //check if sikulilibs are installed
+            string installationPath = Path.Combine(tempPath, "sikulilibs");
+            if (Directory.Exists(installationPath))
+            {
+             return;
+            }
+
+            //Extract ZIP
             var zipStream = typeof(Commander).Assembly.GetManifestResourceStream(typeof(Commander).Assembly.GetName().Name + "." + "sikulilibs.zip");
 
             using (ZipFile zip = ZipFile.Read(zipStream))
@@ -22,7 +34,7 @@ namespace SikuliModule
                 //   - want to extract all entries to current working directory
                 //   - none of the files in the zip already exist in the directory;
                 //     if they do, the method will throw.
-                string tempPath = System.IO.Path.GetTempPath();
+                
                 zip.ExtractAll(tempPath, ExtractExistingFileAction.OverwriteSilently);
 
                 string path = Environment.GetEnvironmentVariable("Path", EnvironmentVariableTarget.Process);
@@ -31,6 +43,7 @@ namespace SikuliModule
 
                 Environment.SetEnvironmentVariable("Path", path, EnvironmentVariableTarget.Process);
             }
+
         }
 
         public static List<Point> Execute(Command command, string mainPattern, string extraPattern, float similarity, int timeout)
@@ -38,6 +51,8 @@ namespace SikuliModule
             ProcessStartInfo psi = null;
             string output = "";
             string error = "";
+         
+            Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
 
             AddSikuliLibs();
 
