@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTest.Core
@@ -35,7 +36,7 @@ namespace UnitTest.Core
             //Start App if AppNotStartAttribute does not exists
             if (appNotStartAttribute == null)
             {
-                StartMSPaint(demo);
+                StartMSPaint();
             }
         }
 
@@ -53,9 +54,37 @@ namespace UnitTest.Core
             }
         }
 
-        private void StartMSPaint(string image)
+        protected void StartMSPaint(int delayInSeconds = 0)
         {
-            System.Diagnostics.Process.Start("mspaint.exe", "\""+image+"\"");
+            if (delayInSeconds == 0)
+            {
+                //Start MSPaint now in main thread
+                System.Diagnostics.Process.Start("mspaint.exe", "\"" + demo + "\"");
+            }
+            else
+            {
+                this.delayTimeInSeconds = delayInSeconds;
+                //Start MSPaint after specified delay time in worker thread
+                Thread thread = new Thread(new ThreadStart(WorkThreadFunction));
+                thread.Start();
+            }
         }
+
+        private int delayTimeInSeconds;
+
+        private void WorkThreadFunction()
+        {
+            try
+            {
+                Thread.Sleep(this.delayTimeInSeconds*1000);
+                System.Diagnostics.Process.Start("mspaint.exe", "\"" + demo + "\"");
+            }
+            catch (Exception ex)
+            {
+                Report.Error("Application can not be started");
+            }
+        }
+
+
     }
 }
