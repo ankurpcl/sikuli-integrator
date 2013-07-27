@@ -42,11 +42,11 @@ namespace SikuliModule
 
             if (String.IsNullOrEmpty(extraPattern))
             {
-                psi = new ProcessStartInfo("java.exe", "-jar \"" + Path.GetDirectoryName(typeof(Commander).Assembly.Location) + @"\" + Settings.JarFile + "\" " + mainPattern + " \"" + command.ToString() + "\" " + similarity + " " + timeout);
+                psi = new ProcessStartInfo("java.exe", "-jar \"" + Path.GetDirectoryName(typeof(Commander).Assembly.Location) + @"\" + Settings.JarFile + "\" \"" + mainPattern + "\" \"" + command.ToString() + "\" " + similarity + " " + timeout);
             }
             else
             {
-                psi = new ProcessStartInfo("java.exe", "-jar \"" + Path.GetDirectoryName(typeof(Commander).Assembly.Location) + @"\" + Settings.JarFile + "\" " + mainPattern + " \"" + command.ToString() + "\" " + similarity + " " + timeout + " \"" + extraPattern + "\"");
+                psi = new ProcessStartInfo("java.exe", "-jar \"" + Path.GetDirectoryName(typeof(Commander).Assembly.Location) + @"\" + Settings.JarFile + "\" \"" + mainPattern + "\" \"" + command.ToString() + "\" " + similarity + " " + timeout + " \"" + extraPattern + "\"");
             }
 
             System.IO.File.WriteAllText(@"C:\SikuliOutputLog.txt", psi.Arguments);
