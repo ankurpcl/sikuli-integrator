@@ -46,12 +46,12 @@ namespace UnitTest.Core
             KillMSPaint();
         }
 
-        private void KillMSPaint()
+        protected void KillMSPaint(int delayInSeconds = 0)
         {
-            foreach (Process proc in Process.GetProcessesByName("mspaint"))
-            {
-                proc.Kill();
-            }
+            this.delayTimeInSeconds = delayInSeconds;
+            //Kill MSPaint after specified delay time from worker thread
+            Thread thread = new Thread(new ThreadStart(DelayedKillMSPaint));
+            thread.Start();
         }
 
         protected void StartMSPaint(int delayInSeconds = 0)
@@ -82,6 +82,22 @@ namespace UnitTest.Core
             catch (Exception ex)
             {
                 Report.Error("Application can not be started");
+            }
+        }
+
+        private void DelayedKillMSPaint()
+        {
+            try
+            {
+                Thread.Sleep(this.delayTimeInSeconds * 1000);
+                foreach (Process proc in Process.GetProcessesByName("mspaint"))
+                {
+                    proc.Kill();
+                }
+            }
+            catch (Exception ex)
+            {
+                Report.Error("Application can not be killed");
             }
         }
 

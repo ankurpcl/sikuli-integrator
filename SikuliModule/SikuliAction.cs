@@ -112,9 +112,9 @@ namespace SikuliModule
             Commander.Execute(Command.WAIT_VANISH, pattern, null, similarity, timeout);
         }
 
-        public static void WaitVanish(string pattern)
+        public static void WaitVanish(string pattern, int timeout)
         {
-            Commander.Execute(Command.WAIT_VANISH, pattern, null, Settings.DefaultSimilarity, Settings.DefaultTimeout);
+            Commander.Execute(Command.WAIT_VANISH, pattern, null, Settings.DefaultSimilarity, timeout);
         }
 
 	    //WAIT
