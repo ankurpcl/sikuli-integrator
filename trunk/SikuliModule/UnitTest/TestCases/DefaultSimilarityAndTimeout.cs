@@ -42,6 +42,21 @@ namespace UnitTest.TestCases
         }
 
         [TestMethod,
+        Description("Test Hover mechanism - default similarity and timeout")]
+        public void TestHoverDefault()
+        {
+            try
+            {
+                SikuliAction.Hover(pattern);
+                Report.Pass("Yep! It's hovered...");
+            }
+            catch
+            {
+                Report.Error("Nope! It's NOT hovered...");
+            }
+        }
+
+        [TestMethod,
         Description("Test Double Click mechanism - default similarity and timeout")]
         public void TestDoubleClickDefault()
         {
