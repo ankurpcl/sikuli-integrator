@@ -31,18 +31,24 @@ namespace UnitTest.TestCases
         {
             //There are 3 patterns on the test image
             List<Point> points = SikuliAction.FindAll(findAllPattern);
-            if (points != null &&
-                points.Count == 3)
+            if (points != null)
             {
                 foreach (Point point in points)
                 {
                     Report.Info("X:" + point.X + "  Y: " + point.Y);
                 }
-                Report.Pass("Yep! They are 3...");
+                if (points.Count == 3)
+                {
+                    Report.Pass("Yep! They are 3...");
+                }
+                else
+                {
+                    Report.Error("Nope! They are NOT 3, they are " + points.Count);
+                }
             }
             else
             {
-                Report.Error("Nope! They are NOT 3...");
+                Report.Error("Nope! There is a problem...");
             }
         }
 
