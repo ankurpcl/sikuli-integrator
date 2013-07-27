@@ -96,14 +96,25 @@ namespace SikuliModule
 
 
         //FIND_ALL
-        public static List<Point> FindAll(string pattern, float similarity, int timeout)
+        public static List<Point> FindAll(string pattern, float similarity, int timeout, Rectangle region)
         {
-            return Commander.Execute(Command.FIND_ALL, pattern, null, similarity, timeout);
+            string extraPattern = null;
+            if (region != Rectangle.Empty)
+            {
+             extraPattern = string.Format("{0};{1};{2};{3}", region.Left, region.Top, region.Width, region.Height);
+            }
+
+            return Commander.Execute(Command.FIND_ALL, pattern, extraPattern, similarity, timeout);
         }
 
         public static List<Point> FindAll(string pattern)
         {
-            return Commander.Execute(Command.FIND_ALL, pattern, null, Settings.DefaultSimilarity, Settings.DefaultTimeout);
+            return FindAll(pattern, Settings.DefaultSimilarity, Settings.DefaultTimeout, Rectangle.Empty);
+        }
+
+        public static List<Point> FindAll(string pattern, Rectangle region)
+        {
+         return FindAll(pattern, Settings.DefaultSimilarity, Settings.DefaultTimeout, region);
         }
 
         //WAIT_VANISH
@@ -117,7 +128,7 @@ namespace SikuliModule
             Commander.Execute(Command.WAIT_VANISH, pattern, null, Settings.DefaultSimilarity, timeout);
         }
 
-	    //WAIT
+	       //WAIT
         public static void Wait(string pattern, float similarity, int timeout)
         {
             Commander.Execute(Command.WAIT, pattern, null, similarity, timeout);
@@ -125,7 +136,7 @@ namespace SikuliModule
 
         public static void Wait(string pattern, int timeout)
         {
-            Commander.Execute(Command.WAIT, pattern, null, Settings.DefaultSimilarity, timeout);
+            Wait(pattern, Settings.DefaultSimilarity, timeout);
         }
     }
 }

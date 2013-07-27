@@ -13,6 +13,11 @@ namespace UnitTest.Core
         readonly protected string pattern = Environment.CurrentDirectory + @"\pattern.png";
         readonly protected string extraPattern = Environment.CurrentDirectory + @"\pattern1.png";
         readonly protected string findAllPattern = Environment.CurrentDirectory + @"\pattern2.png";
+        readonly protected string findAllRegionPattern = Environment.CurrentDirectory + @"\pattern3.png";
+        readonly protected string paintSelectPattern = Environment.CurrentDirectory + @"\pattern4.png";
+        readonly protected string startTopLeftPattern = Environment.CurrentDirectory + @"\pattern5.png";
+        readonly protected string startRightBottomtPattern = Environment.CurrentDirectory + @"\pattern6.png";
+        readonly protected string startPattern = Environment.CurrentDirectory + @"\pattern7.png";
         readonly protected string demo = Environment.CurrentDirectory + @"\demo.png";
 
         public TestContext TestContext { set; get; }
@@ -86,7 +91,7 @@ namespace UnitTest.Core
             }
             catch (Exception ex)
             {
-                Report.Error("Application can not be started");
+                Report.Error("Application can not be started " + ex.Message);
             }
         }
 
