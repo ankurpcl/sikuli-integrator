@@ -52,6 +52,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Core\BaseTestCase.cs" />
+    <Compile Include="Core\AppNotStartAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\Report.cs" />
     <Compile Include="TestCases\DefaultSimilarityAndTimeout.cs" />
