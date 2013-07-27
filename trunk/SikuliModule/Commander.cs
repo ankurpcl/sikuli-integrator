@@ -74,13 +74,10 @@ namespace SikuliModule
 
             switch (command)
             {
+                case Command.FIND_ALL:
                 case Command.EXISTS:
                     {
                         return PrepareCoordinates(output);
-                    }
-                case Command.FIND_ALL:
-                    {
-                        return null ;
                     }
                 default:
                     {

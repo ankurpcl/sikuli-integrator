@@ -96,14 +96,14 @@ namespace SikuliModule
 
 
         //FIND_ALL
-        public static void FindAll(string pattern, float similarity, int timeout)
+        public static List<Point> FindAll(string pattern, float similarity, int timeout)
         {
-            Commander.Execute(Command.FIND_ALL, pattern, null, similarity, timeout);
+            return Commander.Execute(Command.FIND_ALL, pattern, null, similarity, timeout);
         }
 
-        public static void FindAll(string pattern)
+        public static List<Point> FindAll(string pattern)
         {
-            Commander.Execute(Command.FIND_ALL, pattern, null, Settings.DefaultSimilarity, Settings.DefaultTimeout);
+            return Commander.Execute(Command.FIND_ALL, pattern, null, Settings.DefaultSimilarity, Settings.DefaultTimeout);
         }
 
         //WAIT_VANISH

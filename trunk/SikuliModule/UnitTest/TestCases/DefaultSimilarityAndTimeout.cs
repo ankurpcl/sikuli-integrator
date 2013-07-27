@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SikuliModule;
@@ -13,13 +15,34 @@ namespace UnitTest.TestCases
         Description("Test Exists mechanism - default similarity and timeout")]
         public void TestExistsDefault()
         {
-            if (!SikuliAction.Exists(pattern).IsEmpty)
+            if (SikuliAction.Exists(pattern).IsEmpty)
             {
-                Report.Pass("Yep! It's there...");
+                Report.Error("Nope! It's gone...");
             }
             else
             {
-                Report.Error("Nope! It's gone...");
+                Report.Pass("Yep! It's there...");
+            }
+        }
+
+        [TestMethod,
+        Description("Test Find All mechanism - default similarity and timeout")]
+        public void TestFindAllDefault()
+        {
+            //There are 3 patterns on the test image
+            List<Point> points = SikuliAction.FindAll(findAllPattern);
+            if (points != null &&
+                points.Count == 3)
+            {
+                foreach (Point point in points)
+                {
+                    Report.Info("X:" + point.X + "  Y: " + point.Y);
+                }
+                Report.Pass("Yep! They are 3...");
+            }
+            else
+            {
+                Report.Error("Nope! They are NOT 3...");
             }
         }
 
