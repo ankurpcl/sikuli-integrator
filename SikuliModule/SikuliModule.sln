@@ -3,7 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SikuliModule", "SikuliModule.csproj", "{2B0DB914-33F2-43C5-B7D1-F011EA24618E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "..\Test\Test.csproj", "{2617390F-730D-4392-BC16-E0C19719A842}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{09F23D40-30CF-4015-BA83-6A89C846AAF3}"
+	ProjectSection(SolutionItems) = preProject
+		TestSettings.testsettings = TestSettings.testsettings
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{ACDA246F-7733-4C3F-8F7B-2B0BA670235D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +20,10 @@ Global
 		{2B0DB914-33F2-43C5-B7D1-F011EA24618E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B0DB914-33F2-43C5-B7D1-F011EA24618E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B0DB914-33F2-43C5-B7D1-F011EA24618E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2617390F-730D-4392-BC16-E0C19719A842}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2617390F-730D-4392-BC16-E0C19719A842}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2617390F-730D-4392-BC16-E0C19719A842}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2617390F-730D-4392-BC16-E0C19719A842}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACDA246F-7733-4C3F-8F7B-2B0BA670235D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACDA246F-7733-4C3F-8F7B-2B0BA670235D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACDA246F-7733-4C3F-8F7B-2B0BA670235D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACDA246F-7733-4C3F-8F7B-2B0BA670235D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
