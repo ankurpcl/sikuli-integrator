@@ -3,10 +3,11 @@ package com.sikuliintegrator.arguments;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+import com.sikuliintegrator.Constants;
 import com.sikuliintegrator.enums.Command;
 
 public class ArgumentsMapping {
-	
+
 	private String patternURL;
 	private String extraPatternURL;
 	private double similarity;
@@ -15,10 +16,14 @@ public class ArgumentsMapping {
 
 	public ArgumentsMapping(String[] args) {
 		setPatternURL(args[Arguments.PATTERN_URL.ordinal()]);
-		setExtraPatternURL(args[Arguments.EXTRA_PATTERN_URL.ordinal()]);
+		if (args.length == Constants.ARGUMENTS_COUNT) {
+			setExtraPatternURL(args[Arguments.EXTRA_PATTERN_URL.ordinal()]);
+		}
 		setCommand(args[Arguments.COMMAND.ordinal()]);
-		setSimilarity(Double.valueOf(args[Arguments.SIMILARITY.ordinal()]).doubleValue());
-		setTimeout(Integer.valueOf(args[Arguments.TIMEOUT.ordinal()]).intValue());
+		setSimilarity(Double.valueOf(args[Arguments.SIMILARITY.ordinal()])
+				.doubleValue());
+		setTimeout(Integer.valueOf(args[Arguments.TIMEOUT.ordinal()])
+				.intValue());
 	}
 
 	public String getPatternURL() throws FileNotFoundException {
@@ -39,11 +44,10 @@ public class ArgumentsMapping {
 		return this.extraPatternURL;
 	}
 
-	
 	public void setPatternURL(String patternURL) {
 		this.patternURL = patternURL;
 	}
-	
+
 	public void setExtraPatternURL(String extraPatternURL) {
 		this.extraPatternURL = extraPatternURL;
 	}
@@ -63,13 +67,13 @@ public class ArgumentsMapping {
 	public void setTimeout(int timeout) {
 		this.timeout = timeout;
 	}
-	
+
 	public Command getCommand() {
 		return command;
 	}
-	
+
 	public void setCommand(String command) {
 		this.command = Command.valueOf(command);
-		
+
 	}
 }
