@@ -90,7 +90,12 @@ namespace SikuliModule
         {
             if (!String.IsNullOrEmpty(error))
             {
+#if DEBUG
                 throw new Exception(error);
+#else
+                throw new Exception("Internal Error");
+#endif
+                
             }
 
             if (output.Contains(Settings.ErrorMessage))
