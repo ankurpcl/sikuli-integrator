@@ -9,8 +9,52 @@ using UnitTest.Core;
 namespace UnitTest.TestCases
 {
     [TestClass]
-    public class DefaultSimilarityAndTimeout : BaseTestCase
+    public class TestCases : BaseTestCase
     {
+        const int Timeout5S = 5 * 1000;
+        const float Similarity90 = 0.90f;
+
+        [TestMethod,
+        Description("Test Exists mechanism - similarity = 90% and timeout = 5s")]
+        public void TestExistsWithSimilarity90AndTimeout5()
+        {
+            if (SikuliAction.Exists(pattern, Similarity90, Timeout5S).IsEmpty)
+            {
+                Report.Error("Nope! It's gone...");
+            }
+            else
+            {
+                Report.Pass("Yep! It's there...");
+            }
+        }
+
+        [TestMethod,
+        Description("Test Find All mechanism - similarity = 90% and timeout = 5s")]
+        public void TestFindAllWithSimilarity90AndTimeout5()
+        {
+            //There are 3 patterns on the test image
+            List<Point> points = SikuliAction.FindAll(findAllPattern, Similarity90, Timeout5S);
+            if (points != null)
+            {
+                foreach (Point point in points)
+                {
+                    Report.Info("X:" + point.X + "  Y: " + point.Y);
+                }
+                if (points.Count == 3)
+                {
+                    Report.Pass("Yep! They are 3...");
+                }
+                else
+                {
+                    Report.Error("Nope! They are NOT 3, they are " + points.Count);
+                }
+            }
+            else
+            {
+                Report.Error("Nope! There is a problem...");
+            }
+        }
+
         [TestMethod,
         Description("Test Exists mechanism - default similarity and timeout")]
         public void TestExistsDefault()

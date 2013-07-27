@@ -59,7 +59,10 @@ namespace UnitTest.Core
             if (delayInSeconds == 0)
             {
                 //Start MSPaint now in main thread
-                System.Diagnostics.Process.Start("mspaint.exe", "\"" + demo + "\"");
+                ProcessStartInfo startInfo = new ProcessStartInfo("mspaint.exe", "\"" + demo + "\"");
+                startInfo.WindowStyle = ProcessWindowStyle.Maximized;
+                Process.Start(startInfo);
+                //System.Diagnostics.Process.Start("mspaint.exe", "\"" + demo + "\"");
             }
             else
             {
@@ -77,7 +80,9 @@ namespace UnitTest.Core
             try
             {
                 Thread.Sleep(this.delayTimeInSeconds*1000);
-                System.Diagnostics.Process.Start("mspaint.exe", "\"" + demo + "\"");
+                ProcessStartInfo startInfo = new ProcessStartInfo("mspaint.exe", "\"" + demo + "\"");
+                startInfo.WindowStyle = ProcessWindowStyle.Maximized;
+                Process.Start(startInfo);
             }
             catch (Exception ex)
             {
