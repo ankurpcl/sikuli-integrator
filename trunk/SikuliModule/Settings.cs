@@ -11,8 +11,10 @@ namespace SikuliModule
 
         public const string JarFile = "JSikuliModule.jar";
 
-        public const string ErrorMessage = "###FAILURE";
+        public const string Separator = "###";
 
-        public const string SuccessMessage = "###SUCCESS";
+        public const string ErrorMessage = Separator + "FAILURE";
+
+        public const string SuccessMessage = Separator + "SUCCESS";
     }
 }

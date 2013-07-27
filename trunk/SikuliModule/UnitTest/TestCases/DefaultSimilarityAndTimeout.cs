@@ -9,9 +9,6 @@ namespace UnitTest.TestCases
     [TestClass]
     public class DefaultSimilarityAndTimeout : BaseTestCase
     {
-        const int Timeout5S = 5 * 1000;
-        const float Similarity90 = 0.90f;
-
         [TestMethod,
         Description("Test Exists mechanism - default similarity and timeout")]
         public void TestExistsDefault()
