@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
@@ -9,12 +10,28 @@ namespace SikuliModule
         //EXISTS
         public static Point Exists(string pattern, float similarity, int timeout)
         {
-            return Commander.Execute(Command.EXISTS, pattern, null, similarity, timeout);
+            List<Point> point = Commander.Execute(Command.EXISTS, pattern, null, similarity, timeout);
+            if (point != null && point.Count > 0)
+            {
+                return point[0];
+            }
+            else
+            {
+                return Point.Empty;
+            }
         }
 
         public static Point Exists(string pattern)
         {
-            return Commander.Execute(Command.EXISTS, pattern, null, Settings.DefaultSimilarity, Settings.DefaultTimeout);
+            List<Point> point = Commander.Execute(Command.EXISTS, pattern, null, Settings.DefaultSimilarity, Settings.DefaultTimeout);
+            if (point != null && point.Count > 0)
+            {
+                return point[0];
+            }
+            else
+            {
+                return Point.Empty;
+            }
         }
 
 

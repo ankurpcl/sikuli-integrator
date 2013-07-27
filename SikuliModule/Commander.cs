@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Ionic.Zip;
 
 namespace SikuliModule
@@ -20,7 +22,6 @@ namespace SikuliModule
                 //   - want to extract all entries to current working directory
                 //   - none of the files in the zip already exist in the directory;
                 //     if they do, the method will throw.
-
                 string tempPath = System.IO.Path.GetTempPath();
                 zip.ExtractAll(tempPath, ExtractExistingFileAction.OverwriteSilently);
 
@@ -32,7 +33,7 @@ namespace SikuliModule
             }
         }
 
-        public static Point Execute(Command command, string mainPattern, string extraPattern, float similarity, int timeout)
+        public static List<Point> Execute(Command command, string mainPattern, string extraPattern, float similarity, int timeout)
         {
             ProcessStartInfo psi = null;
             string output = "";
@@ -71,13 +72,20 @@ namespace SikuliModule
 
             ConsumeResult(output, error);
 
-            if (command == Command.EXISTS)
+            switch (command)
             {
-                return PrepareCoordinates(output);
-            }
-            else
-            {
-                return Point.Empty;
+                case Command.EXISTS:
+                    {
+                        return PrepareCoordinates(output);
+                    }
+                case Command.FIND_ALL:
+                    {
+                        return null ;
+                    }
+                default:
+                    {
+                        return null;
+                    }
             }
         }
 
@@ -94,30 +102,44 @@ namespace SikuliModule
             }
         }
 
-        private static Point PrepareCoordinates(String rawCoordinates)
+        private static List<Point> PrepareCoordinates(String rawCoordinates)
         {
-            Point point = new Point();
+            List<Point> points = new List<Point>();
 
-            string separator = "###";
+            string[] pointCoordinates = Regex.Split(rawCoordinates, Environment.NewLine);
 
-            rawCoordinates = rawCoordinates.Substring(0,rawCoordinates.IndexOf(Environment.NewLine));
-
-            rawCoordinates = rawCoordinates.Substring(rawCoordinates.IndexOf(separator) + separator.Length);
-
-            rawCoordinates = rawCoordinates.Trim().Replace("(", "").Replace(")", "");
-
-            string[] coordinates = rawCoordinates.Split(';');
-
-            if (coordinates.Length == 2)
+            foreach (string point in pointCoordinates)
             {
-                point = new Point(int.Parse(coordinates[0]), int.Parse(coordinates[1]));
-            }
-            else
-            {
-                throw new Exception("Controls coordinates can not be determined: " + rawCoordinates);
+                if (!String.IsNullOrEmpty(point) && !String.IsNullOrWhiteSpace(point))
+                {
+                    string rawCoord = point.Substring(rawCoordinates.IndexOf(Settings.Separator) + Settings.Separator.Length);
+
+                    rawCoord = rawCoord.Trim().Replace("(", "").Replace(")", "");
+
+                    //Check point format
+                    string regex = @"[0-9];[0-9]";
+                    var match = Regex.Match(rawCoord, regex, RegexOptions.IgnoreCase);
+
+                    if (!match.Success)
+                    {
+                        continue;
+                    }
+
+                    string[] coordinates = rawCoord.Split(';');
+
+                    //Check whether the coordinates are extracted corectly
+                    if (coordinates.Length == 2)
+                    {
+                        points.Add(new Point(int.Parse(coordinates[0]), int.Parse(coordinates[1])));
+                    }
+                    else
+                    {
+                        throw new Exception("Controls coordinates can not be determined: " + rawCoordinates);
+                    }
+                }
             }
 
-            return point;
+            return points;
         }
     }
 }
