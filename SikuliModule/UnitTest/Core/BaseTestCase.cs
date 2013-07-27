@@ -10,6 +10,7 @@ namespace UnitTest.Core
     {
         readonly protected string pattern = Environment.CurrentDirectory + @"\pattern.png";
         readonly protected string extraPattern = Environment.CurrentDirectory + @"\pattern1.png";
+        readonly protected string findAllPattern = Environment.CurrentDirectory + @"\pattern2.png";
         readonly protected string demo = Environment.CurrentDirectory + @"\demo.png";
 
         [TestInitialize]
