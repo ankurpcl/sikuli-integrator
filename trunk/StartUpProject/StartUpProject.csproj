@@ -34,17 +34,17 @@
   <ItemGroup>
     <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\SikuliIntegrator.1.0.0\lib\Ionic.Zip.dll</HintPath>
+      <HintPath>packages\SikuliIntegrator.1.1.0\lib\Ionic.Zip.dll</HintPath>
     </Reference>
     <Reference Include="SikuliModule, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\SikuliIntegrator.1.0.0\lib\SikuliModule.dll</HintPath>
+      <HintPath>packages\SikuliIntegrator.1.1.0\lib\SikuliModule.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing">
       <Private>True</Private>
-      <HintPath>packages\SikuliIntegrator.1.0.0\lib\System.Drawing.dll</HintPath>
+      <HintPath>packages\SikuliIntegrator.1.1.0\lib\System.Drawing.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -68,6 +69,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="img\pattern1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\pattern2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="JSikuliModule.jar">

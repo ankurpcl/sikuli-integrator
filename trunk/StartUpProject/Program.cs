@@ -1,20 +1,48 @@
 ﻿using System;
-using System.Diagnostics;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using SikuliModule;
 
 namespace StartUpProject
 {
-    class Program
+    public class Program : Utils
     {
         static void Main(string[] args)
         {
-            string pattern = Environment.CurrentDirectory + @"\img\pattern.png";
-            string pattern1 = Environment.CurrentDirectory + @"\img\pattern1.png";
-            string demo = Environment.CurrentDirectory + @"\img\demo.png";
+            Program demo = new Program();
 
-            StartMSPaint(demo);
+            demo.StartMSPaint();
 
+            demo.DemoExists();
+
+            demo.DemoFindAll();
+
+            SikuliAction.Click(demo.pattern);
+
+            SikuliAction.DoubleClick(demo.extraPattern);
+
+            SikuliAction.RightClick(demo.pattern);
+
+            SikuliAction.Hover(demo.extraPattern);
+
+            SikuliAction.DragAndDrop(demo.extraPattern, demo.pattern);
+
+            demo.KillMSPaint();
+
+            demo.StartMSPaint(2);
+
+            SikuliAction.Wait(demo.extraPattern, 3);
+
+            demo.KillMSPaint(2);
+
+            SikuliAction.WaitVanish(demo.extraPattern, 3);
+
+            Console.ReadLine();
+        }
+
+        public void DemoExists()
+        {
             if (!SikuliAction.Exists(pattern).IsEmpty)
             {
                 Console.WriteLine("Yep! It's there...");
@@ -23,33 +51,31 @@ namespace StartUpProject
             {
                 Console.WriteLine("Nope! It's gone...");
             }
-
-            SikuliAction.Click(pattern);
-
-            SikuliAction.DoubleClick(pattern1);
-
-            SikuliAction.RightClick(pattern);
-
-            SikuliAction.Hover(pattern1);
-
-            SikuliAction.DragAndDrop(pattern1, pattern);
-
-            KillMSPaint();
-
-            Console.ReadLine();
         }
 
-        static void KillMSPaint()
+        public void DemoFindAll()
         {
-            foreach (Process proc in Process.GetProcessesByName("mspaint"))
+            //There are 3 patterns on the test image
+            List<Point> points = SikuliAction.FindAll(findAllPattern);
+            if (points != null)
             {
-                proc.Kill();
+                foreach (Point point in points)
+                {
+                    Console.WriteLine("X:" + point.X + "  Y: " + point.Y);
+                }
+                if (points.Count == 3)
+                {
+                    Console.WriteLine("Yep! They are 3...");
+                }
+                else
+                {
+                    Console.WriteLine("Nope! They are NOT 3, they are " + points.Count);
+                }
             }
-        }
-
-        static void StartMSPaint(string image)
-        {
-            System.Diagnostics.Process.Start("mspaint.exe", image);
+            else
+            {
+                Console.WriteLine("Nope! There is a problem...");
+            }
         }
     }
 }
