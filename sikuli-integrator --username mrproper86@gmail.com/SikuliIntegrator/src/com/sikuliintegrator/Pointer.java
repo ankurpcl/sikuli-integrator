@@ -12,11 +12,12 @@ public class Pointer {
 
 		/*
 		args = new String[4];
-		args[0] = "E:\\Temp\\Carpeta.png";
+		args[0] = "C:\\Users\\Angel\\Dropbox\\Projects\\SikuliModule\\SikuliModule\\TestResults\\Angel_ANGEL 2013-07-27 09_16_27\\Out\\pattern.png";
 		args[1] = "EXISTS";
 		args[2] = "0.9";
 		args[3] = "5000";
 		*/
+		
 		
 		/*
 		args = new String[5];
@@ -64,13 +65,13 @@ public class Pointer {
 		*/
 		
 		
-		args = new String[5];
+		/*
 		args[0] = "E:\\Temp\\pepita.png";
 		args[1] = "DRAG_DROP";
 		args[2] = "0.9";
 		args[3] = "500005";
 		args[4] = "E:\\Temp\\carpeta.png";			
-		
+		*/
 		
 		try {
 
