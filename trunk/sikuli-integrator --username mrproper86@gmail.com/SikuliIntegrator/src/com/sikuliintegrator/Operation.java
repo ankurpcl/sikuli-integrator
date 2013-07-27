@@ -177,12 +177,11 @@ public class Operation {
 		{
 			throw new NoMatchingElementException();
 		}
-		else{							
-			System.out.println("TOTAL_ELEMENTS " + rs.size());
-						
+		else{										
 			// iterate through coincidences
-			for (ScreenRegion r : rs){			
-				System.out.println( "LOCATION (" + r.getCenter().getX() + ";" + r.getCenter().getY() + ")" );							        
+			for (ScreenRegion r : rs){				
+				System.out.println(Constants.IDENTIFICATOR + "("
+						+ r.getCenter().getX() + ";" + r.getCenter().getY() + ")");
 			}
 			
 			//Success
