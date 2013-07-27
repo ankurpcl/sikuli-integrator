@@ -202,5 +202,37 @@ namespace UnitTest.TestCases
                 Report.Pass("Yep! It's not vanished as expected...");
             }
         }
+
+        [TestMethod,
+        Description("Test Wait mechanism - Positive")]
+        public void TestWaitDefaultPositive()
+        {
+            try
+            {
+                StartMSPaint(2);
+                SikuliAction.Wait(extraPattern, 3);
+                Report.Pass("Yep! It's appeared...");
+            }
+            catch
+            {
+                Report.Error("Nope! It's NOT appeared...");
+            }
+        }
+
+        [TestMethod,
+        Description("Test Wait mechanism - Negative")]
+        public void TestWaitDefaultNegative()
+        {
+            try
+            {
+                StartMSPaint(3);
+                SikuliAction.Wait(extraPattern, 2);
+                Report.Error("Nope! It's appeared, but it shouldn't...");
+            }
+            catch
+            {
+                Report.Pass("Yep! It's not appeared as expected...");
+            }
+        }
     }
 }

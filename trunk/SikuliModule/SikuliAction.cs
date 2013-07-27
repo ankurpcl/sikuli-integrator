@@ -123,9 +123,9 @@ namespace SikuliModule
             Commander.Execute(Command.WAIT, pattern, null, similarity, timeout);
         }
 
-        public static void Wait(string pattern)
+        public static void Wait(string pattern, int timeout)
         {
-            Commander.Execute(Command.WAIT, pattern, null, Settings.DefaultSimilarity, Settings.DefaultTimeout);
+            Commander.Execute(Command.WAIT, pattern, null, Settings.DefaultSimilarity, timeout);
         }
     }
 }
