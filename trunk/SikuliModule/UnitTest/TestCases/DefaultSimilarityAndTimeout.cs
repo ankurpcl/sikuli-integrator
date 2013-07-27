@@ -126,5 +126,37 @@ namespace UnitTest.TestCases
                 Report.Error("Nope! It's NOT drag and dropped...");
             }
         }
+
+        [TestMethod,
+        Description("Test Wait Vanish mechanism - Positive")]
+        public void TestWaitVanishDefaultPositive()
+        {
+            try
+            {
+                KillMSPaint(2);
+                SikuliAction.WaitVanish(extraPattern, 3);
+                Report.Pass("Yep! It's vanished...");
+            }
+            catch
+            {
+                Report.Error("Nope! It's NOT vanished...");
+            }
+        }
+
+        [TestMethod,
+        Description("Test Wait Vanish mechanism - Negative")]
+        public void TestWaitVanishDefaultNegative()
+        {
+            try
+            {
+                KillMSPaint(3);
+                SikuliAction.WaitVanish(extraPattern, 2);
+                Report.Error("Nope! It's vanished, but it shouldn't...");
+            }
+            catch
+            {
+                Report.Pass("Yep! It's not vanished as expected...");
+            }
+        }
     }
 }
