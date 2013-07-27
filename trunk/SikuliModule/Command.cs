@@ -10,7 +10,7 @@ namespace SikuliModule
         DOUBLE_CLICK,
         RIGHT_CLICK,
         HOVER,
-        DRAG_DROP
+        DRAG_DROP,
 	    FIND_ALL,
 	    WAIT_VANISH,
 	    WAIT
