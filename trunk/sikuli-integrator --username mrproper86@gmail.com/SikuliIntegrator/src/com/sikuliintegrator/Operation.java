@@ -157,8 +157,7 @@ public class Operation {
 	/*
 	 * @author: eidermauricio@gmail.com
 	 * Find all ocurrences of a pattern and print the locations 
-	 * to the console in this format:
-	 * TOTAL_ELEMENTS 5
+	 * to the console in this format:	 
 	 * LOCATION (316;201)
 	 * LOCATION (225;631)
 	 * LOCATION (292;502)
@@ -169,10 +168,27 @@ public class Operation {
 	public static void FindAll(ArgumentsMapping arguments)
 			throws FileNotFoundException, NoMatchingElementException {
 		
-		ScreenRegion s = new DesktopScreenRegion();             
+		
+		ScreenRegion s = new DesktopScreenRegion();
+		
+		//If is limited to search into a rectangle
+		if(arguments.getContainsOffsetInfo())
+		{
+			//Define a limited region
+			s = new DesktopScreenRegion(arguments.getX1(), arguments.getY1(), 
+				 					 arguments.getX2(), arguments.getY2());
+		}
+		else
+		{
+			//Define a total region
+			s = new DesktopScreenRegion();
+		}
+
+		//Search the target pattern
 		Target target = new ImageTarget(new File(arguments.getPatternURL())); 
 		List<ScreenRegion> rs = s.findAll(target);
 		
+		//There were occurrences?
 		if(rs == null || rs.size() == 0)
 		{
 			throw new NoMatchingElementException();

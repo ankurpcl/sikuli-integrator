@@ -13,17 +13,22 @@ public class ArgumentsMapping {
 	private double similarity;
 	private int timeout;
 	private Command command;
+	private int x1;
+	private int y1;
+	private int x2;
+	private int y2;
+	private boolean containsOffSet = false;
 
-	public ArgumentsMapping(String[] args) {
+	public ArgumentsMapping(String[] args) {				
 		setPatternURL(args[Arguments.PATTERN_URL.ordinal()]);
 		if (args.length == Constants.ARGUMENTS_COUNT) {
 			setExtraPatternURL(args[Arguments.EXTRA_PATTERN_URL.ordinal()]);
-		}
-		setCommand(args[Arguments.COMMAND.ordinal()]);
+		}				
+		setCommand(args[Arguments.COMMAND.ordinal()]);		
 		setSimilarity(Double.valueOf(args[Arguments.SIMILARITY.ordinal()])
-				.doubleValue());
+				.doubleValue());		
 		setTimeout(Integer.valueOf(args[Arguments.TIMEOUT.ordinal()])
-				.intValue());
+				.intValue());		
 	}
 
 	public String getPatternURL() throws FileNotFoundException {
@@ -34,24 +39,80 @@ public class ArgumentsMapping {
 
 		return this.patternURL;
 	}
+	
+	public void setPatternURL(String patternURL) {		
+		this.patternURL = patternURL;
+	}
 
 	public String getExtraPatternURL() throws FileNotFoundException {
+		
 		File file = new File(this.extraPatternURL);
 		if (!file.exists()) {
 			throw new FileNotFoundException();
 		}
 
+		
 		return this.extraPatternURL;
 	}
-
-	public void setPatternURL(String patternURL) {
-		this.patternURL = patternURL;
+	
+	public int getX1()
+	{
+		return this.x1;
 	}
-
+	
+	public int getY1()
+	{
+		return this.y1;
+	}
+	
+	public int getX2()
+	{
+		return this.x2;
+	}
+	
+	public int getY2()
+	{
+		return this.y2;
+	}
+	
+	public boolean getContainsOffsetInfo()
+	{
+		return this.containsOffSet;
+	}
+		
 	public void setExtraPatternURL(String extraPatternURL) {
-		this.extraPatternURL = extraPatternURL;
+		//By default there is not offset info
+		containsOffSet = false;
+		
+		
+		
+		//There are offset configurations?
+		if(extraPatternURL != null && extraPatternURL.contains(";"))
+		{
+			String[] parts = extraPatternURL.split(";");
+			
+			//Basic x1, y1
+			this.x1 =  Integer.parseInt(parts[0]);
+			this.y1 =  Integer.parseInt(parts[1]);
+			
+			//Extended x2, y2
+			if (parts.length == 4)
+			{
+				this.x2 =  Integer.parseInt(parts[2]);
+				this.y2 =  Integer.parseInt(parts[3]);
+			}	
+			
+			//Indicates that there is offset info
+			containsOffSet = true;
+		}
+		else
+		{
+			this.extraPatternURL = extraPatternURL;
+		}
+		
+		
 	}
-
+	
 	public double getSimilarity() {
 		return this.similarity;
 	}

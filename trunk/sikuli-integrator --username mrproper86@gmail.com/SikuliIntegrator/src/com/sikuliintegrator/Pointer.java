@@ -16,17 +16,7 @@ public class Pointer {
 		args[1] = "EXISTS";
 		args[2] = "0.9";
 		args[3] = "5000";
-		*/
-		
-		
-		/*
-		args = new String[5];
-		args[0] = "E:\\Temp\\pepita.png";
-		args[1] = "FIND_ALL";
-		args[2] = "0.9";
-		args[3] = "5000";
-		args[4] = "";
-		*/
+		*/				
 		
 		/*
 		args = new String[5];
@@ -73,11 +63,32 @@ public class Pointer {
 		args[4] = "E:\\Temp\\carpeta.png";			
 		*/
 		
+		/*
+		args = new String[4];
+		args[0] = "E:\\Temp\\dot.png";
+		args[1] = "FIND_ALL";
+		args[2] = "0.9";
+		args[3] = "5000";
+		//args[4] = "1;1;274;399";
+		*/
+		
+		/*
+		System.out.println("<Arguments are>");
+		System.out.println(args[0]);
+		System.out.println(args[1]);
+		System.out.println(args[2]);
+		System.out.println(args[3]);
+		//System.out.println(args[4]);
+		System.out.println("</Arguments are>");
+		*/
+		
 		try {
 
 			if (args.length == (Constants.ARGUMENTS_COUNT - 1)
 					|| args.length == Constants.ARGUMENTS_COUNT) {
+				
 				ArgumentsMapping arguments = new ArgumentsMapping(args);
+				
 
 				disableCommandLineLogs();
 
