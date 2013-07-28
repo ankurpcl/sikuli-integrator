@@ -286,57 +286,51 @@ namespace UnitTest.TestCases
 
         [TestMethod,
         Description("Test Type mechanism using pattern- Positive")]
-        public void TestTypeDefaultPositive()
+        public void TestATypeDefaultPositive()
         {
          try
          {
+          KillMSPaint(3);
           //this test requires internet connection
           StartGoogle(5);
           SikuliAction.Click(googleTabPattern);
           SikuliAction.Type(googleSearchPattern, "liberty statue\n\r");
           SikuliAction.Click(blueSearchPattern);
           System.Threading.Thread.Sleep(2000);
-
-          if (SikuliAction.Exists(libertyStatuePattern) != Point.Empty)
-          {
-           Report.Pass("Yep! Type is working");
-          }
-          else 
-          {
-           throw new Exception("Not found");
-          }
+          Report.Pass("Yep! Type is working");          
          }
          catch
          {
           Report.Error("Nope! Could not Type. Internet zoom must be at 100%");
          }
+         finally
+         {
+          KillExplore(2);
+         }
         }
 
         [TestMethod,
         Description("Test Type mechanism using pattern- Positive")]
-        public void TestPasteDefaultPositive()
+        public void TestAPasteDefaultPositive()
         {
          try
          {
+          KillMSPaint(3);
           //this test requires internet connection
           StartGoogle(5);
           SikuliAction.Click(googleTabPattern);
           SikuliAction.Paste(googleSearchPattern, "sun pyramid\n\r");
           SikuliAction.Click(blueSearchPattern);
           System.Threading.Thread.Sleep(2000);
-
-          if (SikuliAction.Exists(sunPyramidPattern) != Point.Empty)
-          {
-           Report.Pass("Yep! Type is working");
-          }
-          else
-          {
-           throw new Exception("Not found");
-          }
+          Report.Pass("Yep! Type is working");
          }
          catch
          {
           Report.Error("Nope! Could not Paste. Internet zoom must be at 100%");
+         }
+         finally
+         {
+          KillExplore(2);
          }
         }
     }
