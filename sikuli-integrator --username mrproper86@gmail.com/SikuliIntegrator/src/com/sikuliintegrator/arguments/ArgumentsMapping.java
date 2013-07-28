@@ -17,6 +17,7 @@ public class ArgumentsMapping {
 	private int y1;
 	private int x2;
 	private int y2;
+	private String textToSend;
 	private boolean containsOffSet = false;
 
 	public ArgumentsMapping(String[] args) {				
@@ -79,13 +80,16 @@ public class ArgumentsMapping {
 	{
 		return this.containsOffSet;
 	}
+	
+	public String getTextToSend()
+	{
+		return this.textToSend;
+	}
 		
 	public void setExtraPatternURL(String extraPatternURL) {
 		//By default there is not offset info
 		containsOffSet = false;
-		
-		
-		
+						
 		//There are offset configurations?
 		if(extraPatternURL != null && extraPatternURL.contains(";"))
 		{
@@ -105,12 +109,14 @@ public class ArgumentsMapping {
 			//Indicates that there is offset info
 			containsOffSet = true;
 		}
-		else
+		else if(extraPatternURL.contains("/")||extraPatternURL.contains("\\"))
 		{
 			this.extraPatternURL = extraPatternURL;
 		}
-		
-		
+		else
+		{
+			this.textToSend = extraPatternURL;				
+		}		
 	}
 	
 	public double getSimilarity() {
