@@ -71,6 +71,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="img\pattern3.png" />
+    <Content Include="img\pattern4.png" />
+    <Content Include="img\pattern5.png" />
+    <Content Include="img\pattern6.png" />
+    <Content Include="img\pattern7.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SikuliModule.csproj">
