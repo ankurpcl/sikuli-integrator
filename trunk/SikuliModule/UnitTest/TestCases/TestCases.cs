@@ -286,51 +286,51 @@ namespace UnitTest.TestCases
 
         [TestMethod,
         Description("Test Type mechanism using pattern- Positive")]
+        [AppNotStart]
         public void TestATypeDefaultPositive()
         {
          try
          {
-          KillMSPaint(3);
           //this test requires internet connection
-          StartGoogle(5);
-          SikuliAction.Click(googleTabPattern);
+          StartGoogle(4);
+          SikuliAction.Click(googleTabPattern, 0.9f, 7000);
           SikuliAction.Type(googleSearchPattern, "liberty statue\n\r");
-          SikuliAction.Click(blueSearchPattern);
+          SikuliAction.Click(blueSearchPattern, 0.9f, 5000);
           System.Threading.Thread.Sleep(2000);
           Report.Pass("Yep! Type is working");          
          }
          catch
          {
-          Report.Error("Nope! Could not Type. Internet zoom must be at 100%");
+          Report.Error("Nope! Could not Type. Internet zoom must be at 100% or check your internet connection");
          }
          finally
          {
-          KillExplore(2);
+          KillExplore();
          }
         }
 
         [TestMethod,
-        Description("Test Type mechanism using pattern- Positive")]
+        Description("Test Paste mechanism using pattern- Positive")]
+        [AppNotStart]
         public void TestAPasteDefaultPositive()
         {
          try
          {
-          KillMSPaint(3);
           //this test requires internet connection
-          StartGoogle(5);
-          SikuliAction.Click(googleTabPattern);
+          StartGoogle(4);
+          SikuliAction.Click(googleTabPattern, 0.9f, 7000);
           SikuliAction.Paste(googleSearchPattern, "sun pyramid\n\r");
-          SikuliAction.Click(blueSearchPattern);
+          SikuliAction.Click(blueSearchPattern, 0.9f, 5000);
           System.Threading.Thread.Sleep(2000);
           Report.Pass("Yep! Type is working");
          }
          catch
          {
-          Report.Error("Nope! Could not Paste. Internet zoom must be at 100%");
+          Report.Error("Nope! Could not Paste. Internet zoom must be at 100% or check your internet connection");
          }
          finally
          {
-          KillExplore(2);
+          KillExplore();
          }
         }
     }
