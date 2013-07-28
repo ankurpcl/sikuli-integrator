@@ -64,6 +64,14 @@ namespace UnitTest.Core
             thread.Start();
         }
 
+        protected void KillExplore(int delayInSeconds = 0)
+        {
+         this.delayTimeInSeconds = delayInSeconds;
+         //Kill MSPaint after specified delay time from worker thread
+         Thread thread = new Thread(new ThreadStart(DelayedKillExplore));
+         thread.Start();
+        }
+
         protected void StartMSPaint(int delayInSeconds = 0)
         {
             if (delayInSeconds == 0)
@@ -152,7 +160,7 @@ namespace UnitTest.Core
             }
         }
 
-        private void DelayedKillGoogle()
+        private void DelayedKillExplore()
         {
          try
          {
