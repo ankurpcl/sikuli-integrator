@@ -152,7 +152,7 @@ namespace UnitTest.Core
             }
             catch (Exception ex)
             {
-                Report.Error("Application can not be killed");
+                Report.Error("Application can not be killed " + ex.Message);
             }
         }
 
@@ -168,7 +168,7 @@ namespace UnitTest.Core
          }
          catch (Exception ex)
          {
-          Report.Error("Application can not be killed");
+          Report.Error("Application can not be killed " + ex.Message);
          }
         }
 
