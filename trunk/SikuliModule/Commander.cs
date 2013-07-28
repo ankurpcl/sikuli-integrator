@@ -51,54 +51,63 @@ namespace SikuliModule
             ProcessStartInfo psi = null;
             string output = "";
             string error = "";
-         
-            Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
 
-            AddSikuliLibs();
-
-            if (String.IsNullOrEmpty(extraPattern))
+            try
             {
-                psi = new ProcessStartInfo("java.exe", "-jar \"" + Path.GetDirectoryName(typeof(Commander).Assembly.Location) + @"\" + Settings.JarFile + "\" \"" + mainPattern + "\" \"" + command.ToString() + "\" " + similarity + " " + timeout);
+
+                Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+
+                AddSikuliLibs();
+
+                if (String.IsNullOrEmpty(extraPattern))
+                {
+                    psi = new ProcessStartInfo("java.exe", "-jar \"" + Path.GetDirectoryName(typeof(Commander).Assembly.Location) + @"\" + Settings.JarFile + "\" \"" + mainPattern + "\" \"" + command.ToString() + "\" " + similarity + " " + timeout);
+                }
+                else
+                {
+                    psi = new ProcessStartInfo("java.exe", "-jar \"" + Path.GetDirectoryName(typeof(Commander).Assembly.Location) + @"\" + Settings.JarFile + "\" \"" + mainPattern + "\" \"" + command.ToString() + "\" " + similarity + " " + timeout + " \"" + extraPattern + "\"");
+                }
+
+                System.IO.File.WriteAllText(@"C:\SikuliOutputLog.txt", psi.Arguments);
+
+                psi.WindowStyle = ProcessWindowStyle.Hidden;
+                psi.RedirectStandardOutput = true;
+                psi.RedirectStandardError = true;
+                psi.UseShellExecute = false;
+                psi.CreateNoWindow = true;
+                System.Diagnostics.Process reg;
+
+                reg = System.Diagnostics.Process.Start(psi);
+                reg.WaitForExit();
+                using (System.IO.StreamReader myOutput = reg.StandardOutput)
+                {
+                    output = myOutput.ReadToEnd();
+                }
+                using (System.IO.StreamReader myError = reg.StandardError)
+                {
+                    error = myError.ReadToEnd();
+                }
+
+                ConsumeResult(output, error);
+
+                switch (command)
+                {
+                    case Command.FIND_ALL:
+                    case Command.EXISTS:
+                        {
+                            return PrepareCoordinates(output);
+                        }
+                    default:
+                        {
+                            return null;
+                        }
+                }
             }
-            else
+            catch (Exception ex)
             {
-                psi = new ProcessStartInfo("java.exe", "-jar \"" + Path.GetDirectoryName(typeof(Commander).Assembly.Location) + @"\" + Settings.JarFile + "\" \"" + mainPattern + "\" \"" + command.ToString() + "\" " + similarity + " " + timeout + " \"" + extraPattern + "\"");
+                System.IO.File.WriteAllText(@"C:\SikuliExceptionLog.txt", ex.Message);
             }
-
-            System.IO.File.WriteAllText(@"C:\SikuliOutputLog.txt", psi.Arguments);
-
-            psi.WindowStyle = ProcessWindowStyle.Hidden;
-            psi.RedirectStandardOutput = true;
-            psi.RedirectStandardError = true;
-            psi.UseShellExecute = false;
-            psi.CreateNoWindow = true;
-            System.Diagnostics.Process reg;
-
-            reg = System.Diagnostics.Process.Start(psi);
-            reg.WaitForExit();
-            using (System.IO.StreamReader myOutput = reg.StandardOutput)
-            {
-                output = myOutput.ReadToEnd();
-            }
-            using (System.IO.StreamReader myError = reg.StandardError)
-            {
-                error = myError.ReadToEnd();
-            }
-
-            ConsumeResult(output, error);
-
-            switch (command)
-            {
-                case Command.FIND_ALL:
-                case Command.EXISTS:
-                    {
-                        return PrepareCoordinates(output);
-                    }
-                default:
-                    {
-                        return null;
-                    }
-            }
+            return null;
         }
 
         private static void ConsumeResult(string output, string error)
