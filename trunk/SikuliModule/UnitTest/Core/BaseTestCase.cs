@@ -24,6 +24,7 @@ namespace UnitTest.Core
         readonly protected string libertyStatuePattern = Environment.CurrentDirectory + @"\pattern10.png";
         readonly protected string sunPyramidPattern = Environment.CurrentDirectory + @"\pattern11.png";
         readonly protected string blueSearchPattern = Environment.CurrentDirectory + @"\pattern12.png";
+        readonly protected string blankTextPattern = Environment.CurrentDirectory + @"\pattern13.png";
 
         public TestContext TestContext { set; get; }
 
@@ -72,6 +73,14 @@ namespace UnitTest.Core
          thread.Start();
         }
 
+        protected void KillNotepad(int delayInSeconds = 0)
+        {
+         this.delayTimeInSeconds = delayInSeconds;
+         //Kill MSPaint after specified delay time from worker thread
+         Thread thread = new Thread(new ThreadStart(DelayedKillNotepad));
+         thread.Start();
+        }
+
         protected void StartMSPaint(int delayInSeconds = 0)
         {
             if (delayInSeconds == 0)
@@ -108,6 +117,24 @@ namespace UnitTest.Core
          }
         }
 
+        protected void StartNotepad(int delayInSeconds, int waitSeconds)
+        {
+         if (delayInSeconds == 0)
+         {
+          //Start MSPaint now in main thread
+          ProcessStartInfo startInfo = new ProcessStartInfo("notepad.exe");
+          startInfo.WindowStyle = ProcessWindowStyle.Maximized;
+          Process.Start(startInfo);
+          System.Threading.Thread.Sleep(waitSeconds*1000);
+         }
+         else
+         {
+          this.delayTimeInSeconds = delayInSeconds;
+          Thread thread = new Thread(new ThreadStart(DelayedStartNotepad));
+          thread.Start();
+         }
+        }
+
         private int delayTimeInSeconds;
 
         private void DelayedStartMSPaint()
@@ -133,6 +160,21 @@ namespace UnitTest.Core
           ProcessStartInfo startInfo = new ProcessStartInfo("iexplore.exe", "\"www.google.com\"");
           startInfo.WindowStyle = ProcessWindowStyle.Maximized;
           Process.Start(startInfo);                    
+         }
+         catch (Exception ex)
+         {
+          Report.Error("Application can not be started " + ex.Message);
+         }
+        }
+
+        private void DelayedStartNotepad()
+        {
+         try
+         {
+          Thread.Sleep(this.delayTimeInSeconds * 1000);
+          ProcessStartInfo startInfo = new ProcessStartInfo("Notepad");
+          startInfo.WindowStyle = ProcessWindowStyle.Maximized;
+          Process.Start(startInfo);
          }
          catch (Exception ex)
          {
@@ -172,5 +214,20 @@ namespace UnitTest.Core
          }
         }
 
+        private void DelayedKillNotepad()
+        {
+         try
+         {
+          Thread.Sleep(this.delayTimeInSeconds * 1000);
+          foreach (Process proc in Process.GetProcessesByName("Notepad"))
+          {
+           proc.Kill();
+          }
+         }
+         catch (Exception ex)
+         {
+          Report.Error("Application can not be killed " + ex.Message);
+         }
+        }
     }
 }

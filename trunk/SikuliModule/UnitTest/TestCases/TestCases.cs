@@ -310,6 +310,27 @@ namespace UnitTest.TestCases
         }
 
         [TestMethod,
+           Description("Test Type mechanism using pattern- Positive")]
+        [AppNotStart]
+        public void TestATypeTextDefaultPositive()
+        {                            
+          StartNotepad(0, 2);                  
+                    
+          try
+          {
+           SikuliAction.Type("Hello World\nThis is a type example");
+           List<Point> pts = SikuliAction.FindAll(blankTextPattern, new Rectangle(10, 30, 100, 30));
+           Report.Error("Nope! Could not type a simple text");
+          }
+          catch
+          {           
+           Report.Pass("Yep! Type is working");
+          }
+                   
+          KillNotepad();         
+        }
+
+        [TestMethod,
         Description("Test Paste mechanism using pattern- Positive")]
         [AppNotStart]
         public void TestAPasteDefaultPositive()
