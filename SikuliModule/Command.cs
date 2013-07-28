@@ -11,8 +11,10 @@ namespace SikuliModule
         RIGHT_CLICK,
         HOVER,
         DRAG_DROP,
-	    FIND_ALL,
-	    WAIT_VANISH,
-	    WAIT
+	       FIND_ALL,
+	       WAIT_VANISH,
+	       WAIT,
+        TYPE,
+        PASTE
     }
 }

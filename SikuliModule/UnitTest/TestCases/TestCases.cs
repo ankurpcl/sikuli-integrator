@@ -283,5 +283,61 @@ namespace UnitTest.TestCases
                 Report.Pass("Yep! It's not appeared as expected...");
             }
         }
+
+        [TestMethod,
+        Description("Test Type mechanism using pattern- Positive")]
+        public void TestTypeDefaultPositive()
+        {
+         try
+         {
+          //this test requires internet connection
+          StartGoogle(5);
+          SikuliAction.Click(googleTabPattern);
+          SikuliAction.Type(googleSearchPattern, "liberty statue\n\r");
+          SikuliAction.Click(blueSearchPattern);
+          System.Threading.Thread.Sleep(2000);
+
+          if (SikuliAction.Exists(libertyStatuePattern) != Point.Empty)
+          {
+           Report.Pass("Yep! Type is working");
+          }
+          else 
+          {
+           throw new Exception("Not found");
+          }
+         }
+         catch
+         {
+          Report.Error("Nope! Could not Type. Internet zoom must be at 100%");
+         }
+        }
+
+        [TestMethod,
+        Description("Test Type mechanism using pattern- Positive")]
+        public void TestPasteDefaultPositive()
+        {
+         try
+         {
+          //this test requires internet connection
+          StartGoogle(5);
+          SikuliAction.Click(googleTabPattern);
+          SikuliAction.Paste(googleSearchPattern, "sun pyramid\n\r");
+          SikuliAction.Click(blueSearchPattern);
+          System.Threading.Thread.Sleep(2000);
+
+          if (SikuliAction.Exists(sunPyramidPattern) != Point.Empty)
+          {
+           Report.Pass("Yep! Type is working");
+          }
+          else
+          {
+           throw new Exception("Not found");
+          }
+         }
+         catch
+         {
+          Report.Error("Nope! Could not Paste. Internet zoom must be at 100%");
+         }
+        }
     }
 }

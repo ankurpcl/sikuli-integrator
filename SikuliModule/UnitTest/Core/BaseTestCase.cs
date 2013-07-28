@@ -19,6 +19,11 @@ namespace UnitTest.Core
         readonly protected string startRightBottomtPattern = Environment.CurrentDirectory + @"\pattern6.png";
         readonly protected string startPattern = Environment.CurrentDirectory + @"\pattern7.png";
         readonly protected string demo = Environment.CurrentDirectory + @"\demo.png";
+        readonly protected string googleSearchPattern = Environment.CurrentDirectory + @"\pattern8.png";
+        readonly protected string googleTabPattern = Environment.CurrentDirectory + @"\pattern9.png";
+        readonly protected string libertyStatuePattern = Environment.CurrentDirectory + @"\pattern10.png";
+        readonly protected string sunPyramidPattern = Environment.CurrentDirectory + @"\pattern11.png";
+        readonly protected string blueSearchPattern = Environment.CurrentDirectory + @"\pattern12.png";
 
         public TestContext TestContext { set; get; }
 
@@ -78,6 +83,25 @@ namespace UnitTest.Core
             }
         }
 
+        protected void StartGoogle(int delayInSeconds = 0)
+        {
+         if (delayInSeconds == 0)
+         {
+          //Start MSPaint now in main thread
+          ProcessStartInfo startInfo = new ProcessStartInfo("iexplore.exe", "\"www.google.com\"");
+          startInfo.WindowStyle = ProcessWindowStyle.Maximized;
+          Process.Start(startInfo);
+          //System.Diagnostics.Process.Start("mspaint.exe", "\"" + demo + "\"");
+         }
+         else
+         {
+          this.delayTimeInSeconds = delayInSeconds;
+          //Start MSPaint after specified delay time in worker thread
+          Thread thread = new Thread(new ThreadStart(DelayedStartGoogle));
+          thread.Start();
+         }
+        }
+
         private int delayTimeInSeconds;
 
         private void DelayedStartMSPaint()
@@ -93,6 +117,23 @@ namespace UnitTest.Core
             {
                 Report.Error("Application can not be started " + ex.Message);
             }
+        }
+
+        private void DelayedStartGoogle()
+        {
+         try
+         {
+          
+          ProcessStartInfo startInfo = new ProcessStartInfo("iexplore.exe", "\"www.google.com\"");
+          startInfo.WindowStyle = ProcessWindowStyle.Maximized;
+          Process.Start(startInfo);
+          
+          Thread.Sleep(this.delayTimeInSeconds * 1000);
+         }
+         catch (Exception ex)
+         {
+          Report.Error("Application can not be started " + ex.Message);
+         }
         }
 
         private void DelayedKillMSPaint()
@@ -111,6 +152,21 @@ namespace UnitTest.Core
             }
         }
 
+        private void DelayedKillGoogle()
+        {
+         try
+         {
+          Thread.Sleep(this.delayTimeInSeconds * 1000);
+          foreach (Process proc in Process.GetProcessesByName("iexplore"))
+          {
+           proc.Kill();
+          }
+         }
+         catch (Exception ex)
+         {
+          Report.Error("Application can not be killed");
+         }
+        }
 
     }
 }

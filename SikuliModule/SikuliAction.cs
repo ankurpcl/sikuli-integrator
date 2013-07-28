@@ -138,5 +138,27 @@ namespace SikuliModule
         {
             Wait(pattern, Settings.DefaultSimilarity, timeout);
         }
+
+        //TYPE
+        public static void Type(string pattern, string text)
+        {
+         Commander.Execute(Command.TYPE, pattern, text, Settings.DefaultSimilarity, Settings.DefaultTimeout);
+        }
+        
+        public static void Type(string text)
+        {
+         Type("", text);
+        }
+
+        //PASTE
+        public static void Paste(string pattern, string text)
+        {
+         Commander.Execute(Command.PASTE, pattern, text, Settings.DefaultSimilarity, Settings.DefaultTimeout);
+        }
+
+        public static void Paste(string text)
+        {
+         Paste("", text);
+        }
     }
 }
