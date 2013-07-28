@@ -9,5 +9,7 @@ public enum Command {
 	DRAG_DROP,
 	FIND_ALL,
 	WAIT_VANISH,
-	WAIT
+	WAIT,
+	TYPE,
+	PASTE
 }

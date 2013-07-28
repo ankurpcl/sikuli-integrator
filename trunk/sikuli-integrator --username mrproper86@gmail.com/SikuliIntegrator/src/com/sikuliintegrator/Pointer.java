@@ -136,7 +136,15 @@ public class Pointer {
 						case DRAG_DROP: {
 							Operation.DragDrop(arguments);
 							break;
-						}							
+						}
+						case TYPE: {
+							Operation.Type(arguments);
+							break;
+						}
+						case PASTE: {
+							Operation.Paste(arguments);
+							break;
+						}
 						default: {
 							throw new UnknownCommandException();
 						}

@@ -8,7 +8,9 @@ import org.sikuli.api.DesktopScreenRegion;
 import org.sikuli.api.ImageTarget;
 import org.sikuli.api.ScreenRegion;
 import org.sikuli.api.Target;
+import org.sikuli.api.robot.Keyboard;
 import org.sikuli.api.robot.Mouse;
+import org.sikuli.api.robot.desktop.DesktopKeyboard;
 import org.sikuli.api.robot.desktop.DesktopMouse;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
@@ -144,13 +146,12 @@ public class Operation {
 
 		if (match != null) {
 			ScreenRegion r = getScreenRegion(arguments);
-			// Click the center of the found target
+			// Moves to the center of the found target
 			Mouse mouse = new DesktopMouse();
 			mouse.drop(r.getCenter());
 			Result.success();
 		} else {
 			throw new NoMatchingElementException();
-
 		}
 	}
 	
@@ -168,8 +169,34 @@ public class Operation {
 	public static void FindAll(ArgumentsMapping arguments)
 			throws FileNotFoundException, NoMatchingElementException {
 		
+		//Get a search region
+		ScreenRegion s = GetSearchRegion(arguments);
+
+		//Search the target pattern
+		Target target = new ImageTarget(new File(arguments.getPatternURL())); 
+		List<ScreenRegion> rs = s.findAll(target);
 		
-		ScreenRegion s = new DesktopScreenRegion();
+		//There were occurrences?
+		if(rs == null || rs.size() == 0)
+		{
+			throw new NoMatchingElementException();
+		}
+		else{										
+			// iterate through coincidences to display them
+			for (ScreenRegion r : rs){				
+				System.out.println(Constants.IDENTIFICATOR + "("
+						+ r.getCenter().getX() + ";" + r.getCenter().getY() + ")");
+			}
+			
+			//Success
+			Result.success();
+		} 
+	}
+
+	private static ScreenRegion GetSearchRegion(ArgumentsMapping arguments) {
+		
+		//Creates a region variable
+		ScreenRegion s= null;
 		
 		//If is limited to search into a rectangle
 		if(arguments.getContainsOffsetInfo())
@@ -183,26 +210,9 @@ public class Operation {
 			//Define a total region
 			s = new DesktopScreenRegion();
 		}
-
-		//Search the target pattern
-		Target target = new ImageTarget(new File(arguments.getPatternURL())); 
-		List<ScreenRegion> rs = s.findAll(target);
 		
-		//There were occurrences?
-		if(rs == null || rs.size() == 0)
-		{
-			throw new NoMatchingElementException();
-		}
-		else{										
-			// iterate through coincidences
-			for (ScreenRegion r : rs){				
-				System.out.println(Constants.IDENTIFICATOR + "("
-						+ r.getCenter().getX() + ";" + r.getCenter().getY() + ")");
-			}
-			
-			//Success
-			Result.success();
-		} 
+		//Returns the region
+		return s;
 	}
 	
 	
@@ -266,5 +276,92 @@ public class Operation {
 			throw new NoMatchingElementException();
 		}		
 	}
-	
+
+	/*
+	 * @author: eidermauricio@gmail.com
+	 * Type text on a Pattern or just send the text 
+	 * 
+	*/
+	public static void Type(ArgumentsMapping arguments) 
+			throws NoMatchingElementException
+	{				
+		try
+		{
+			//Path to the pattern
+			String patternURL = arguments.getPatternURL();
+			
+			//Defines the screen
+			Screen screen = new Screen();
+			
+			// Types the text				
+			screen.type(patternURL, arguments.getTextToSend());			
+		}
+		catch (FindFailed ex)
+		{
+			TypeTextOnly(arguments.getTextToSend());
+		}
+		catch (FileNotFoundException ex)
+		{
+			TypeTextOnly(arguments.getTextToSend());
+		}		
+	}
+
+	/*
+	 * @author: eidermauricio@gmail.com
+	 * Just send the text 
+	 * 
+	*/
+	private static void TypeTextOnly(String textToType)
+	{
+		//Creates a Keyboard object
+		Keyboard kyb = new DesktopKeyboard();
+		
+		//Type the text
+		kyb.type(textToType);		
+	}
+
+	/*
+	 * @author: eidermauricio@gmail.com
+	 * Type text on a Pattern or just send the text 
+	 * 
+	*/
+	public static void Paste(ArgumentsMapping arguments) 
+			throws NoMatchingElementException
+	{				
+		try
+		{
+			//Path to the pattern
+			String patternURL = arguments.getPatternURL();
+			
+			//Defines the screen
+			Screen screen = new Screen();
+			
+			//Pastes the text				
+			screen.paste(patternURL, arguments.getTextToSend());			
+		}
+		catch (FindFailed ex)
+		{			
+			//Just paste the text
+			PasteTextOnly(arguments.getTextToSend());
+		}
+		catch (FileNotFoundException ex)
+		{
+			//Just paste the text
+			PasteTextOnly(arguments.getTextToSend());
+		}		
+	}
+
+	/*
+	 * @author: eidermauricio@gmail.com
+	 * Just paste the text 
+	 * 
+	*/
+	private static void PasteTextOnly(String textToType)
+	{
+		//Creates a Keyboard object
+		Keyboard kyb = new DesktopKeyboard();
+		
+		//Type the text
+		kyb.paste(textToType);		
+	}
 }
