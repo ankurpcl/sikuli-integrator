@@ -296,7 +296,6 @@ namespace UnitTest.TestCases
           SikuliAction.Click(googleTabPattern, 0.9f, 7000);
           SikuliAction.Type(googleSearchPattern, "liberty statue\n\r");
           SikuliAction.Click(blueSearchPattern, 0.9f, 5000);
-          System.Threading.Thread.Sleep(2000);
           Report.Pass("Yep! Type is working");          
          }
          catch
@@ -342,7 +341,6 @@ namespace UnitTest.TestCases
           SikuliAction.Click(googleTabPattern, 0.9f, 7000);
           SikuliAction.Paste(googleSearchPattern, "sun pyramid\n\r");
           SikuliAction.Click(blueSearchPattern, 0.9f, 5000);
-          System.Threading.Thread.Sleep(2000);
           Report.Pass("Yep! Type is working");
          }
          catch
