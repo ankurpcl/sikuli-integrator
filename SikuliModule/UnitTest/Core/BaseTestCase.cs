@@ -99,12 +99,10 @@ namespace UnitTest.Core
           ProcessStartInfo startInfo = new ProcessStartInfo("iexplore.exe", "\"www.google.com\"");
           startInfo.WindowStyle = ProcessWindowStyle.Maximized;
           Process.Start(startInfo);
-          //System.Diagnostics.Process.Start("mspaint.exe", "\"" + demo + "\"");
          }
          else
          {
           this.delayTimeInSeconds = delayInSeconds;
-          //Start MSPaint after specified delay time in worker thread
           Thread thread = new Thread(new ThreadStart(DelayedStartGoogle));
           thread.Start();
          }
@@ -131,12 +129,10 @@ namespace UnitTest.Core
         {
          try
          {
-          
+          Thread.Sleep(this.delayTimeInSeconds * 1000);
           ProcessStartInfo startInfo = new ProcessStartInfo("iexplore.exe", "\"www.google.com\"");
           startInfo.WindowStyle = ProcessWindowStyle.Maximized;
-          Process.Start(startInfo);
-          
-          Thread.Sleep(this.delayTimeInSeconds * 1000);
+          Process.Start(startInfo);                    
          }
          catch (Exception ex)
          {
