@@ -5,7 +5,10 @@ namespace SikuliModule
 {
     class Settings
     {
-        public const int DefaultTimeout = 10 * 1000;
+        /// <summary>
+        /// Expressed in seconds
+        /// </summary>
+        public const int DefaultTimeout = 10;
 
         public const float DefaultSimilarity = 0.95f;
 
