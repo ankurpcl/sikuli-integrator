@@ -93,7 +93,7 @@ public class Operation {
 			throws FileNotFoundException, NoMatchingElementException {
 
 		Screen screen = new Screen();
-		Match match = screen.exists(arguments.getPatternURL(),
+		Match match = screen.exists( arguments.getPatternURL(),
 				arguments.getTimeout());
 
 		if (match != null) {
@@ -127,7 +127,6 @@ public class Operation {
 			Result.success();
 		} else {
 			throw new NoMatchingElementException();
-
 		}
 	}
 	
@@ -294,16 +293,27 @@ public class Operation {
 			Screen screen = new Screen();
 			
 			// Types the text				
-			screen.type(patternURL, arguments.getTextToSend());			
+			screen.type(patternURL, arguments.getTextToSend());
+			
+			//Report Ok
+			Result.success();
 		}
 		catch (FindFailed ex)
 		{
 			TypeTextOnly(arguments.getTextToSend());
+			//Report Ok
+			Result.success();
 		}
 		catch (FileNotFoundException ex)
 		{
 			TypeTextOnly(arguments.getTextToSend());
-		}		
+			//Report Ok
+			Result.success();
+		}
+		catch (Exception ex)
+		{
+			throw new NoMatchingElementException();
+		}
 	}
 
 	/*
@@ -343,11 +353,19 @@ public class Operation {
 		{			
 			//Just paste the text
 			PasteTextOnly(arguments.getTextToSend());
+			//Report Ok
+			Result.success();
 		}
 		catch (FileNotFoundException ex)
 		{
 			//Just paste the text
 			PasteTextOnly(arguments.getTextToSend());
+			//Report Ok
+			Result.success();
+		}
+		catch (Exception ex)
+		{
+			throw new NoMatchingElementException();
 		}		
 	}
 
