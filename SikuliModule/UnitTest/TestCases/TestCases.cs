@@ -292,15 +292,24 @@ namespace UnitTest.TestCases
          try
          {
           //this test requires internet connection
-          StartGoogle(4);
-          SikuliAction.Click(googleTabPattern, 0.9f, 7000);
+          StartGoogle(0);
+          System.Threading.Thread.Sleep(7000);
+          SikuliAction.Click(googleTabPattern, 0.9f, 35);
           SikuliAction.Type(googleSearchPattern, "liberty statue\n\r");
-          SikuliAction.Click(blueSearchPattern, 0.9f, 5000);
-          Report.Pass("Yep! Type is working");          
+          System.Windows.Forms.SendKeys.SendWait("{ENTER}");
+          SikuliAction.Click(blueSearchPattern, 0.9f, 5);
+          if (SikuliAction.Exists(libertyStatuePattern, 0.9f, 4)!=Point.Empty)
+          {
+           Report.Pass("Yep! Type is working");
+          }
+          else 
+          {
+           Report.Error("Nope! Could not Type. Internet zoom must be at 100% or check your internet connection");
+          }
          }
-         catch
+         catch (Exception ex)
          {
-          Report.Error("Nope! Could not Type. Internet zoom must be at 100% or check your internet connection");
+          Report.Error("Nope! Could not Type. " + ex.Message);
          }
          finally
          {
@@ -334,14 +343,27 @@ namespace UnitTest.TestCases
         [AppNotStart]
         public void TestAPasteDefaultPositive()
         {
+
          try
          {
           //this test requires internet connection
-          StartGoogle(4);
-          SikuliAction.Click(googleTabPattern, 0.9f, 7000);
-          SikuliAction.Paste(googleSearchPattern, "sun pyramid\n\r");
-          SikuliAction.Click(blueSearchPattern, 0.9f, 5000);
-          Report.Pass("Yep! Type is working");
+          StartGoogle(0);
+          System.Threading.Thread.Sleep(7000);
+          SikuliAction.Click(googleTabPattern, 0.9f, 30);          
+          SikuliAction.Paste(googleSearchPattern, "sun pyramid mexico");
+          System.Windows.Forms.SendKeys.SendWait("{ENTER}");
+          SikuliAction.Click(blueSearchPattern, 0.9f, 5);
+          Report.Info("Click search button");
+
+          if (SikuliAction.Exists(sunPyramidPattern, 0.9f, 4) != Point.Empty)
+          {
+           Report.Pass("Yep! Paste is working");
+          }
+          else
+          {
+           Report.Error("Nope! Could not Paste. Internet zoom must be at 100% or check your internet connection");
+          }
+
          }
          catch
          {
