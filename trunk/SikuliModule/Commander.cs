@@ -21,7 +21,7 @@ namespace SikuliModule
             string installationPath = Path.Combine(tempPath, "sikulilibs");
             if (Directory.Exists(installationPath))
             {
-             return;
+                return;
             }
 
             //Extract ZIP
@@ -34,7 +34,6 @@ namespace SikuliModule
                 //   - want to extract all entries to current working directory
                 //   - none of the files in the zip already exist in the directory;
                 //     if they do, the method will throw.
-                
                 zip.ExtractAll(tempPath, ExtractExistingFileAction.OverwriteSilently);
 
                 string path = Environment.GetEnvironmentVariable("Path", EnvironmentVariableTarget.Process);
@@ -43,7 +42,11 @@ namespace SikuliModule
 
                 Environment.SetEnvironmentVariable("Path", path, EnvironmentVariableTarget.Process);
             }
+        }
 
+        private static string AddQuotes(string value)
+        {
+            return " \"" + value + "\"";
         }
 
         public static List<Point> Execute(Command command, string mainPattern, string extraPattern, float similarity, int timeout)
@@ -54,18 +57,17 @@ namespace SikuliModule
 
             try
             {
-
                 Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
 
                 AddSikuliLibs();
 
                 if (String.IsNullOrEmpty(extraPattern))
                 {
-                    psi = new ProcessStartInfo("java.exe", "-jar \"" + Path.GetDirectoryName(typeof(Commander).Assembly.Location) + @"\" + Settings.JarFile + "\" \"" + mainPattern + "\" \"" + command.ToString() + "\" " + similarity + " " + timeout);
+                    psi = new ProcessStartInfo("java.exe", "-jar" + AddQuotes(Path.GetDirectoryName(typeof(Commander).Assembly.Location) + @"\" + Settings.JarFile) + AddQuotes(mainPattern) + AddQuotes(command.ToString()) + " " + similarity + " " + timeout);
                 }
                 else
                 {
-                    psi = new ProcessStartInfo("java.exe", "-jar \"" + Path.GetDirectoryName(typeof(Commander).Assembly.Location) + @"\" + Settings.JarFile + "\" \"" + mainPattern + "\" \"" + command.ToString() + "\" " + similarity + " " + timeout + " \"" + extraPattern + "\"");
+                    psi = new ProcessStartInfo("java.exe", "-jar" + AddQuotes(Path.GetDirectoryName(typeof(Commander).Assembly.Location) + @"\" + Settings.JarFile) + AddQuotes(mainPattern) + AddQuotes(command.ToString()) + " " + similarity + " " + timeout + AddQuotes(extraPattern));
                 }
 
                 System.IO.File.WriteAllText(@"C:\SikuliOutputLog.txt", psi.Arguments);
@@ -114,12 +116,11 @@ namespace SikuliModule
         {
             if (!String.IsNullOrEmpty(error))
             {
-#if DEBUG
+                #if DEBUG
                 throw new Exception(error);
-#else
+                #else
                 throw new Exception("Internal Error");
-#endif
-                
+                #endif
             }
 
             if (output.Contains(Settings.ErrorMessage))
