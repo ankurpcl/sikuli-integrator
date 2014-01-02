@@ -13,18 +13,7 @@ namespace UnitTest.Core
         readonly protected string pattern = Environment.CurrentDirectory + @"\pattern.png";
         readonly protected string extraPattern = Environment.CurrentDirectory + @"\pattern1.png";
         readonly protected string findAllPattern = Environment.CurrentDirectory + @"\pattern2.png";
-        readonly protected string findAllRegionPattern = Environment.CurrentDirectory + @"\pattern3.png";
-        readonly protected string paintSelectPattern = Environment.CurrentDirectory + @"\pattern4.png";
-        readonly protected string startTopLeftPattern = Environment.CurrentDirectory + @"\pattern5.png";
-        readonly protected string startRightBottomtPattern = Environment.CurrentDirectory + @"\pattern6.png";
-        readonly protected string startPattern = Environment.CurrentDirectory + @"\pattern7.png";
         readonly protected string demo = Environment.CurrentDirectory + @"\demo.png";
-        readonly protected string googleSearchPattern = Environment.CurrentDirectory + @"\pattern8.png";
-        readonly protected string googleTabPattern = Environment.CurrentDirectory + @"\pattern9.png";
-        readonly protected string libertyStatuePattern = Environment.CurrentDirectory + @"\pattern10.png";
-        readonly protected string sunPyramidPattern = Environment.CurrentDirectory + @"\pattern11.png";
-        readonly protected string blueSearchPattern = Environment.CurrentDirectory + @"\pattern12.png";
-        readonly protected string blankTextPattern = Environment.CurrentDirectory + @"\pattern13.png";
 
         public TestContext TestContext { set; get; }
 
@@ -65,20 +54,12 @@ namespace UnitTest.Core
             thread.Start();
         }
 
-        protected void KillExplore(int delayInSeconds = 0)
-        {
-         this.delayTimeInSeconds = delayInSeconds;
-         //Kill MSPaint after specified delay time from worker thread
-         Thread thread = new Thread(new ThreadStart(DelayedKillExplore));
-         thread.Start();
-        }
-
         protected void KillNotepad(int delayInSeconds = 0)
         {
-         this.delayTimeInSeconds = delayInSeconds;
-         //Kill MSPaint after specified delay time from worker thread
-         Thread thread = new Thread(new ThreadStart(DelayedKillNotepad));
-         thread.Start();
+            this.delayTimeInSeconds = delayInSeconds;
+            //Kill MSPaint after specified delay time from worker thread
+            Thread thread = new Thread(new ThreadStart(DelayedKillNotepad));
+            thread.Start();
         }
 
         protected void StartMSPaint(int delayInSeconds = 0)
@@ -89,7 +70,6 @@ namespace UnitTest.Core
                 ProcessStartInfo startInfo = new ProcessStartInfo("mspaint.exe", "\"" + demo + "\"");
                 startInfo.WindowStyle = ProcessWindowStyle.Maximized;
                 Process.Start(startInfo);
-                //System.Diagnostics.Process.Start("mspaint.exe", "\"" + demo + "\"");
             }
             else
             {
@@ -100,49 +80,51 @@ namespace UnitTest.Core
             }
         }
 
-        protected void StartGoogle(int delayInSeconds = 0)
-        {
-         if (delayInSeconds == 0)
-         {
-          //Start MSPaint now in main thread
-          ProcessStartInfo startInfo = new ProcessStartInfo("iexplore.exe", "\"www.google.com\"");
-          startInfo.WindowStyle = ProcessWindowStyle.Maximized;
-          Process.Start(startInfo);
-         }
-         else
-         {
-          this.delayTimeInSeconds = delayInSeconds;
-          Thread thread = new Thread(new ThreadStart(DelayedStartGoogle));
-          thread.Start();
-         }
-        }
-
         protected void StartNotepad(int delayInSeconds, int waitSeconds)
         {
-         if (delayInSeconds == 0)
-         {
-          //Start MSPaint now in main thread
-          ProcessStartInfo startInfo = new ProcessStartInfo("notepad.exe");
-          startInfo.WindowStyle = ProcessWindowStyle.Maximized;
-          Process.Start(startInfo);
-          System.Threading.Thread.Sleep(waitSeconds*1000);
-         }
-         else
-         {
-          this.delayTimeInSeconds = delayInSeconds;
-          Thread thread = new Thread(new ThreadStart(DelayedStartNotepad));
-          thread.Start();
-         }
+            if (delayInSeconds == 0)
+            {
+                //Start MSPaint now in main thread
+                ProcessStartInfo startInfo = new ProcessStartInfo("notepad.exe");
+                startInfo.WindowStyle = ProcessWindowStyle.Maximized;
+                Process.Start(startInfo);
+            }
+            else
+            {
+                this.delayTimeInSeconds = delayInSeconds;
+                Thread thread = new Thread(new ThreadStart(DelayedStartNotepad));
+                thread.Start();
+            }
         }
 
         private int delayTimeInSeconds;
 
         private void DelayedStartMSPaint()
         {
+            DelayedStart("mspaint.exe");
+        }
+
+        private void DelayedStartNotepad()
+        {
+            DelayedStart("notepad.exe");
+        }
+
+        private void DelayedKillMSPaint()
+        {
+            DelayedKill("mspaint");
+        }
+
+        private void DelayedKillNotepad()
+        {
+            DelayedKill("notepad");
+        }
+
+        private void DelayedStart(string appName)
+        {
             try
             {
-                Thread.Sleep(this.delayTimeInSeconds*1000);
-                ProcessStartInfo startInfo = new ProcessStartInfo("mspaint.exe", "\"" + demo + "\"");
+                Thread.Sleep(this.delayTimeInSeconds * 1000);
+                ProcessStartInfo startInfo = new ProcessStartInfo(appName, "\"" + demo + "\"");
                 startInfo.WindowStyle = ProcessWindowStyle.Maximized;
                 Process.Start(startInfo);
             }
@@ -152,42 +134,12 @@ namespace UnitTest.Core
             }
         }
 
-        private void DelayedStartGoogle()
-        {
-         try
-         {
-          Thread.Sleep(this.delayTimeInSeconds * 1000);
-          ProcessStartInfo startInfo = new ProcessStartInfo("iexplore.exe", "\"www.google.com\"");
-          startInfo.WindowStyle = ProcessWindowStyle.Maximized;
-          Process.Start(startInfo);                    
-         }
-         catch (Exception ex)
-         {
-          Report.Error("Application can not be started " + ex.Message);
-         }
-        }
-
-        private void DelayedStartNotepad()
-        {
-         try
-         {
-          Thread.Sleep(this.delayTimeInSeconds * 1000);
-          ProcessStartInfo startInfo = new ProcessStartInfo("Notepad");
-          startInfo.WindowStyle = ProcessWindowStyle.Maximized;
-          Process.Start(startInfo);
-         }
-         catch (Exception ex)
-         {
-          Report.Error("Application can not be started " + ex.Message);
-         }
-        }
-
-        private void DelayedKillMSPaint()
+        private void DelayedKill(string appName)
         {
             try
             {
                 Thread.Sleep(this.delayTimeInSeconds * 1000);
-                foreach (Process proc in Process.GetProcessesByName("mspaint"))
+                foreach (Process proc in Process.GetProcessesByName(appName))
                 {
                     proc.Kill();
                 }
@@ -198,36 +150,6 @@ namespace UnitTest.Core
             }
         }
 
-        private void DelayedKillExplore()
-        {
-         try
-         {
-          Thread.Sleep(this.delayTimeInSeconds * 1000);
-          foreach (Process proc in Process.GetProcessesByName("iexplore"))
-          {
-           proc.Kill();
-          }
-         }
-         catch (Exception ex)
-         {
-          Report.Error("Application can not be killed " + ex.Message);
-         }
-        }
 
-        private void DelayedKillNotepad()
-        {
-         try
-         {
-          Thread.Sleep(this.delayTimeInSeconds * 1000);
-          foreach (Process proc in Process.GetProcessesByName("Notepad"))
-          {
-           proc.Kill();
-          }
-         }
-         catch (Exception ex)
-         {
-          Report.Error("Application can not be killed " + ex.Message);
-         }
-        }
     }
 }

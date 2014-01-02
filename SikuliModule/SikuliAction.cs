@@ -34,7 +34,6 @@ namespace SikuliModule
             }
         }
 
-
         //CLICK
         public static void Click(string pattern, float similarity, int timeout)
         {
@@ -45,7 +44,6 @@ namespace SikuliModule
         {
             Commander.Execute(Command.CLICK, pattern, null, Settings.DefaultSimilarity, Settings.DefaultTimeout);
         }
-
 
         //DOUBLE_CLICK
         public static void DoubleClick(string pattern, float similarity, int timeout)
@@ -58,7 +56,6 @@ namespace SikuliModule
             Commander.Execute(Command.DOUBLE_CLICK, pattern, null, Settings.DefaultSimilarity, Settings.DefaultTimeout);
         }
 
-
         //RIGHT_CLICK
         public static void RightClick(string pattern, float similarity, int timeout)
         {
@@ -69,7 +66,6 @@ namespace SikuliModule
         {
             Commander.Execute(Command.RIGHT_CLICK, pattern, null, Settings.DefaultSimilarity, Settings.DefaultTimeout);
         }
-
 
         //HOVER
         public static void Hover(string pattern, float similarity, int timeout)
@@ -82,7 +78,6 @@ namespace SikuliModule
             Commander.Execute(Command.HOVER, pattern, null, Settings.DefaultSimilarity, Settings.DefaultTimeout);
         }
 
-
         //DRAG_DROP
         public static void DragAndDrop(string pattern, string toPattern, float similarity, int timeout)
         {
@@ -94,14 +89,13 @@ namespace SikuliModule
             Commander.Execute(Command.DRAG_DROP, pattern, toPattern, Settings.DefaultSimilarity, Settings.DefaultTimeout);
         }
 
-
         //FIND_ALL
         public static List<Point> FindAll(string pattern, float similarity, int timeout, Rectangle region)
         {
             string extraPattern = null;
             if (region != Rectangle.Empty)
             {
-             extraPattern = string.Format("{0};{1};{2};{3}", region.Left, region.Top, region.Width, region.Height);
+                extraPattern = string.Format("{0};{1};{2};{3}", region.Left, region.Top, region.Width, region.Height);
             }
 
             return Commander.Execute(Command.FIND_ALL, pattern, extraPattern, similarity, timeout);
@@ -114,7 +108,7 @@ namespace SikuliModule
 
         public static List<Point> FindAll(string pattern, Rectangle region)
         {
-         return FindAll(pattern, Settings.DefaultSimilarity, Settings.DefaultTimeout, region);
+            return FindAll(pattern, Settings.DefaultSimilarity, Settings.DefaultTimeout, region);
         }
 
         //WAIT_VANISH
@@ -128,7 +122,7 @@ namespace SikuliModule
             Commander.Execute(Command.WAIT_VANISH, pattern, null, Settings.DefaultSimilarity, timeout);
         }
 
-	       //WAIT
+        //WAIT
         public static void Wait(string pattern, float similarity, int timeout)
         {
             Commander.Execute(Command.WAIT, pattern, null, similarity, timeout);
@@ -142,23 +136,23 @@ namespace SikuliModule
         //TYPE
         public static void Type(string pattern, string text)
         {
-         Commander.Execute(Command.TYPE, pattern, text, Settings.DefaultSimilarity, Settings.DefaultTimeout);
+            Commander.Execute(Command.TYPE, pattern, text, Settings.DefaultSimilarity, Settings.DefaultTimeout);
         }
         
         public static void Type(string text)
         {
-         Type("", text);
+            Type("", text);
         }
 
         //PASTE
         public static void Paste(string pattern, string text)
         {
-         Commander.Execute(Command.PASTE, pattern, text, Settings.DefaultSimilarity, Settings.DefaultTimeout);
+            Commander.Execute(Command.PASTE, pattern, text, Settings.DefaultSimilarity, Settings.DefaultTimeout);
         }
 
         public static void Paste(string text)
         {
-         Paste("", text);
+            Paste("", text);
         }
     }
 }
